@@ -1,34 +1,34 @@
 include "taxonomy.diaspec";
 
-// kitchen context
-context KitchenContext as Boolean {
-}
-
-
 // kitchen controller
 controller KitchenController {
+		when provided KitchenStatus
+		do ActOnCoocker on Cooker;
 }
 
 context KitchenStatus as KitchenState {
 	when provided LastMove
 	get state from ContactSensor
 	always publish;
+		when provided LastMoveBehindKitchen
+	get state from ContactSensor
+	always publish;
 }
 
-context LastMove as Boolean  {
+context LastMove as Float  {
 	when provided motion from MotionDetector
 	get motion from MotionDetector
 	always publish;
 }
 
-context LastMoveBehindKitchen as Boolean  {
+context LastMoveBehindKitchen as Float  {
 	when provided motion from MotionDetectorBehindKitchen
 	get motion from MotionDetectorBehindKitchen
 	always publish;
 }
 
 device ContactSensor extends Sensor {
- source state as StateDoor;
+ source state as DoorState;
 }
 
 device ElectricMeter extends EnergyMeter {
@@ -46,23 +46,21 @@ device MotionDetector extends Sensor {
 enumeration StatePresence{
 	TARGET,MISSED
 }
-enumeration StateDoor{
+enumeration DoorState{
 	OPEN,CLOSED
 }
 enumeration KitchenState{
-	RUN,STOP
+	WARN,OK,STOP
 }
 
 
-device KitchenSystem extends PhysicalDevice{
-	source status as KitchenState;
-	action Regulate;
+device Cooker extends Appliance{
+	source statusKitchen as KitchenState;
+	action ActOnCoocker;
 }
 
-action Regulate{
-	notifyLower();
-	notifyUpper();
-	stopKitchen();
+action ActOnCoocker{
+	stopCoocker();
 }
 
 
