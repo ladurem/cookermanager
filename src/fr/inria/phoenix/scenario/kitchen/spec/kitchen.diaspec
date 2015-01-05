@@ -52,3 +52,17 @@ enumeration StateDoor{
 enumeration KitchenState{
 	RUN,STOP
 }
+
+
+device KitchenSystem extends PhysicalDevice{
+	source status as KitchenState;
+	action Regulate;
+}
+
+action Regulate{
+	notifyLower();
+	notifyUpper();
+	stopKitchen();
+}
+
+

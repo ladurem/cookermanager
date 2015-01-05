@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <DiaGraph>
-	<context id="KitchenContext" x="597.0" y="243.0"/>
-	<controller id="KitchenController" x="114.0" y="189.0"/>
-	<context id="KitchenStatus" x="199.0" y="271.0"/>
-	<source id="MotionDetector/motion" x="24.0" y="549.0"/>
-	<source id="ContactSensor/state" x="204.0" y="549.0"/>
-	<source id="MotionDetectorBehindKitchen/motion" x="384.0" y="549.0"/>
-	<source id="null/null" x="654.0" y="549.0"/>
-	<controller id="KitchenController" x="294.0" y="189.0"/>
-	<context id="LastMove" x="24.0" y="429.0"/>
-	<context id="LastMoveBehindKitchen" x="384.0" y="429.0"/>
+	<controller id="KitchenController" x="119.0" y="190.0"/>
+	<context id="KitchenContext" x="209.0" y="430.0"/>
+	<context id="KitchenStatus" x="119.0" y="310.0"/>
+	<context id="LastMove" x="29.0" y="430.0"/>
+	<source id="MotionDetector/motion" x="29.0" y="550.0"/>
+	<source id="ContactSensor/state" x="209.0" y="550.0"/>
+	<context id="LastMoveBehindKitchen" x="389.0" y="430.0"/>
+	<source id="MotionDetectorBehindKitchen/motion" x="389.0" y="550.0"/>
 </DiaGraph>
