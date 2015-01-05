@@ -13,11 +13,6 @@ import fr.inria.phoenix.diasuite.framework.misc.AppComponentBinder;
  */
 public class ComponentBinder extends AppComponentBinder {
 
-	@Override
-	public Class<? extends AbstractKitchenContext> getKitchenContextClass() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public Class<? extends AbstractKitchenStatus> getKitchenStatusClass() {
