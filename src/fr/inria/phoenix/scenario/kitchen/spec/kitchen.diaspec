@@ -2,65 +2,69 @@ include "taxonomy.diaspec";
 
 // kitchen controller
 controller KitchenController {
-		when provided KitchenStatus
-		do ActOnCoocker on Cooker;
+	when provided KitchenStatus do ActOnCoocker on Cooker;
 }
 
 context KitchenStatus as KitchenState {
-	when provided LastMove
-	get state from ContactSensor
-	always publish;
-		when provided LastMoveBehindKitchen
-	get state from ContactSensor
-	always publish;
+	when provided LastMove get state from ContactSensor always publish;
+	when provided LastMoveBehindKitchen get state from ContactSensor always publish;
+	when provided CoockerState  always publish;
 }
 
-context LastMove as Float  {
-	when provided motion from MotionDetector
-	get motion from MotionDetector
-	always publish;
+context LastMove as Float {
+	when provided motion from MotionDetector get motion from MotionDetector always publish;
 }
 
-context LastMoveBehindKitchen as Float  {
-	when provided motion from MotionDetectorBehindKitchen
-	get motion from MotionDetectorBehindKitchen
-	always publish;
+context LastMoveBehindKitchen as Float {
+	when provided motion from MotionDetectorBehindKitchen get motion from MotionDetectorBehindKitchen always publish;
+}
+context CoockerState as Boolean{
+	when provided statusCoocker from SmartSwich always publish;
 }
 
 device ContactSensor extends Sensor {
- source state as DoorState;
+	source state as DoorState;
 }
 
 device ElectricMeter extends EnergyMeter {
- source currentElectricConsumption as KitchenState;
+	source currentElectricConsumption as KitchenState;
 }
 
 device MotionDetectorBehindKitchen extends Sensor {
- source motion as StatePresence;
+	source motion as StatePresence;
 }
 
 device MotionDetector extends Sensor {
- source motion as StatePresence;
-}
-
-enumeration StatePresence{
-	TARGET,MISSED
-}
-enumeration DoorState{
-	OPEN,CLOSED
-}
-enumeration KitchenState{
-	WARN,OK,STOP
+	source motion as StatePresence;
 }
 
 
-device Cooker extends Appliance{
+device SmartSwich extends Appliance {
+	source statusCoocker as CoockerState;
+}
+
+device Cooker extends Appliance {
 	source statusKitchen as KitchenState;
 	action ActOnCoocker;
 }
 
-action ActOnCoocker{
+action ActOnCoocker {
 	stopCoocker();
 }
+	
+	
+enumeration StatePresence {
+	TARGET, MISSED
+}
 
+enumeration DoorState {
+	OPEN, CLOSED
+}
 
+enumeration KitchenState {
+	WARN, OK, STOP
+}
+
+enumeration CoockerState {
+	ON, OFF
+}

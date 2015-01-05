@@ -1,6 +1,6 @@
 package fr.inria.phoenix.scenario.kitchen.impl;
         
-import fr.inria.phoenix.diasuite.framework.context.kitchencontext.AbstractKitchenContext;
+import fr.inria.phoenix.diasuite.framework.context.coockerstate.AbstractCoockerState;
 import fr.inria.phoenix.diasuite.framework.context.kitchenstatus.AbstractKitchenStatus;
 import fr.inria.phoenix.diasuite.framework.context.lastmove.AbstractLastMove;
 import fr.inria.phoenix.diasuite.framework.context.lastmovebehindkitchen.AbstractLastMoveBehindKitchen;
@@ -34,6 +34,12 @@ public class ComponentBinder extends AppComponentBinder {
 
 	@Override
 	public Class<? extends AbstractKitchenController> getKitchenControllerClass() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Class<? extends AbstractCoockerState> getCoockerStateClass() {
 		// TODO Auto-generated method stub
 		return null;
 	}
