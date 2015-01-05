@@ -1,0 +1,54 @@
+include "taxonomy.diaspec";
+
+// kitchen context
+context KitchenContext as Boolean {
+}
+
+
+// kitchen controller
+controller KitchenController {
+}
+
+context KitchenStatus as KitchenState {
+	when provided LastMove
+	get state from ContactSensor
+	always publish;
+}
+
+context LastMove as Boolean  {
+	when provided motion from MotionDetector
+	get motion from MotionDetector
+	always publish;
+}
+
+context LastMoveBehindKitchen as Boolean  {
+	when provided motion from MotionDetectorBehindKitchen
+	get motion from MotionDetectorBehindKitchen
+	always publish;
+}
+
+device ContactSensor extends Sensor {
+ source state as StateDoor;
+}
+
+device ElectricMeter extends EnergyMeter {
+ source currentElectricConsumption as KitchenState;
+}
+
+device MotionDetectorBehindKitchen extends Sensor {
+ source motion as StatePresence;
+}
+
+device MotionDetector extends Sensor {
+ source motion as StatePresence;
+}
+
+enumeration StatePresence{
+	TARGET,MISSED
+}
+enumeration StateDoor{
+	OPEN,CLOSED
+}
+enumeration KitchenState{
+	RUN,STOP
+}
