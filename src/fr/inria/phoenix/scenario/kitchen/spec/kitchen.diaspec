@@ -6,48 +6,29 @@ controller KitchenController {
 }
 
 context KitchenStatus as KitchenState {
-//	when provided LastMove maybe publish;
-//	when provided LastMoveBehindKitchen maybe publish;
-	when provided CoockerState 
-	get timerTriggered from Timer,
-	LastMove,LastMoveBehindKitchen	maybe publish;
-	
+	when provided CoockerStatus get timerTriggered from Timer, LastMove, state from ContactSensor maybe publish;
 }
 
 context LastMove as Float {
 	when provided motion from MotionDetector get motion from MotionDetector always publish;
 }
-
-context LastMoveBehindKitchen as Float {
-	when provided motion from MotionDetectorBehindKitchen get motion from MotionDetectorBehindKitchen always publish;
-}
-
-context CoockerState as Boolean {
-	when provided statusCoocker from SmartSwich always publish;
+context CoockerStatus as Boolean{
+	when provided state from Cooker
+	get state from Cooker,
+	currentElectricConsumption from ElectricMeter
+	always publish;
 }
 
 device ContactSensor extends Sensor {
 	source state as DoorState;
 }
 
-device ElectricMeter extends EnergyMeter {
-	source currentElectricConsumption as KitchenState;
-}
-
-device MotionDetectorBehindKitchen extends Sensor {
-	source motion as StatePresence;
-}
-
 device MotionDetector extends Sensor {
 	source motion as StatePresence;
 }
 
-device SmartSwich extends Appliance {
-	source statusCoocker as CoockerState;
-}
-
 device Cooker extends Appliance {
-	source statusKitchen as KitchenState;
+	source state as State;
 	action ActOnCoocker;
 }
 
@@ -59,6 +40,11 @@ action ActOnCoocker {
 	stopCoocker();
 }
 
+device ElectricMeter extends EnergyMeter {
+	source electricConsumption as Float indexed by date as Date;
+	source currentElectricConsumption as Float;
+}
+
 enumeration StatePresence {
 	TARGET, MISSED
 }
@@ -67,10 +53,14 @@ enumeration DoorState {
 	OPEN, CLOSED
 }
 
-enumeration KitchenState {
-	WARN, OK, STOP
+structure State {
+	state as String;
+	timestamp as String;
 }
 
 enumeration CoockerState {
 	ON, OFF
+}
+enumeration KitchenState {
+	OK,WARN,STOP
 }
