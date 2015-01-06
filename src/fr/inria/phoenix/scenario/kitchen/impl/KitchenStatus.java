@@ -16,7 +16,6 @@ public class KitchenStatus extends AbstractKitchenStatus{
 	protected KitchenStatusValuePublishable onCookerStatus(
 			CookerStatusValue cookerStatusValue,
 			DiscoverForCookerStatus discover) {
-		
 		Float LastMoveSensor1 = discover.lastMove().getSensor1().floatValue();
 		Float LastMoveSensor2 = discover.lastMove().getSensor2().floatValue();
 		String IsDoorOpen = discover.contactSensors().anyOne().toString();
@@ -26,12 +25,11 @@ public class KitchenStatus extends AbstractKitchenStatus{
 		
 		
 		System.out.println("#DEBUG: SENSOR1"+LastMoveSensor1+" SENSOR2:"+LastMoveSensor2+" DOORSTATUS:"+IsDoorOpen+" COOKERSTATUS"+IsCoockerIsOn);
-		
 		return null;
-
 	}
 
-		
+
+	
 	
 
 }

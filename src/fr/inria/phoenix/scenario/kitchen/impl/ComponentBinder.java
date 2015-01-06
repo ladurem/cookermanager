@@ -1,5 +1,6 @@
 package fr.inria.phoenix.scenario.kitchen.impl;
         
+
 import fr.inria.phoenix.diasuite.framework.context.coockerstatus.AbstractCoockerStatus;
 import fr.inria.phoenix.diasuite.framework.context.cookerstatus.AbstractCookerStatus;
 import fr.inria.phoenix.diasuite.framework.context.kitchenstatus.AbstractKitchenStatus;
