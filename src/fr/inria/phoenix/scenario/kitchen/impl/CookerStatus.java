@@ -5,9 +5,9 @@ import fr.inria.diagen.log.DiaLog;
 import fr.inria.phoenix.diasuite.framework.context.coockerstatus.AbstractCoockerStatus;
 import fr.inria.phoenix.diasuite.framework.device.cooker.StateFromCooker;
 
-public class CoockerStatus extends AbstractCoockerStatus {
+public class CookerStatus extends AbstractCoockerStatus {
 
-	public CoockerStatus(ServiceConfiguration serviceConfiguration) {
+	public CookerStatus(ServiceConfiguration serviceConfiguration) {
 		super(serviceConfiguration);
 	}
 
