@@ -8,8 +8,11 @@ controller KitchenController {
 context KitchenStatus as KitchenState {
 	when provided CoockerStatus get timerTriggered from Timer, LastMove, state from ContactSensor maybe publish;
 }
-
-context LastMove as Float {
+structure GetSensor{
+	sensor1 as Float;
+	sensor2 as Float;
+}
+context LastMove as GetSensor {
 	when provided motion from MotionDetector get motion from MotionDetector always publish;
 }
 context CoockerStatus as Boolean{

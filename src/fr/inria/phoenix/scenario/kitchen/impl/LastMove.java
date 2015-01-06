@@ -3,6 +3,7 @@ package fr.inria.phoenix.scenario.kitchen.impl;
 import fr.inria.diagen.core.ServiceConfiguration;
 import fr.inria.diagen.log.DiaLog;
 import fr.inria.phoenix.diasuite.framework.context.lastmove.AbstractLastMove;
+import fr.inria.phoenix.diasuite.framework.datatype.getsensor.GetSensor;
 import fr.inria.phoenix.diasuite.framework.device.motiondetector.MotionFromMotionDetector;
 
 public class LastMove extends AbstractLastMove {
@@ -10,11 +11,9 @@ public class LastMove extends AbstractLastMove {
 	public LastMove(ServiceConfiguration serviceConfiguration) {
 		super(serviceConfiguration);
 	}
-	
-
 
 	@Override
-	protected Float onMotionFromMotionDetector(
+	protected GetSensor onMotionFromMotionDetector(
 			MotionFromMotionDetector motionFromMotionDetector,
 			DiscoverForMotionFromMotionDetector discover) {
 
@@ -57,7 +56,7 @@ public class LastMove extends AbstractLastMove {
 		
 		
 		//TODO A gerer le return
-		return Sensor1;
+		return new GetSensor(Sensor1,Sensor2) ;
 
 		//return  Float(Sensor1,Sensor2);
 	}

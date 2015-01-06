@@ -16,9 +16,8 @@ public class CoockerStatus extends AbstractCoockerStatus {
 	protected Boolean onStateFromCooker(StateFromCooker stateFromCooker,
 			DiscoverForStateFromCooker discover) {
 
-		String location = stateFromCooker.sender().location();
-		String CookerState = discover.cookers().whereLocation(location).toString();
-		String ElectricConsumption = discover.electricMeters().whereLocation(location).toString();
+		String CookerState = discover.cookers().anyOne().toString();
+		String ElectricConsumption = discover.electricMeters().anyOne().toString();
 
 		if (CookerState.equals("ON")
 				&& Integer.parseInt(ElectricConsumption) != 0) {
