@@ -2,11 +2,11 @@ include "taxonomy.diaspec";
 
 // kitchen controller
 controller KitchenController {
-	when provided KitchenStatus do ActOnCoocker on Cooker;
+	when provided KitchenStatus do ActOnCooker on Cooker;
 }
 
 context KitchenStatus as KitchenState {
-	when provided CoockerStatus get timerTriggered from Timer, LastMove, state from ContactSensor maybe publish;
+	when provided CookerStatus get timerTriggered from Timer, LastMove, state from ContactSensor maybe publish;
 }
 structure GetSensor{
 	sensor1 as Float;
@@ -15,7 +15,7 @@ structure GetSensor{
 context LastMove as GetSensor {
 	when provided motion from MotionDetector get motion from MotionDetector always publish;
 }
-context CoockerStatus as Boolean{
+context CookerStatus as Boolean{
 	when provided state from Cooker
 	get state from Cooker,
 	currentElectricConsumption from ElectricMeter
@@ -24,10 +24,10 @@ context CoockerStatus as Boolean{
 // TODO A retirer
 device Cooker extends Appliance {
 	source state as State;
-	action ActOnCoocker;
+	action ActOnCooker;
 }
-action ActOnCoocker {
-	stopCoocker();
+action ActOnCooker {
+	stopCooker();
 }
 
 enumeration KitchenState {

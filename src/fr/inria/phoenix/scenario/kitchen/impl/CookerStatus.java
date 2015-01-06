@@ -5,16 +5,16 @@ import fr.inria.diagen.log.DiaLog;
 import fr.inria.phoenix.diasuite.framework.context.coockerstatus.AbstractCoockerStatus;
 import fr.inria.phoenix.diasuite.framework.device.cooker.StateFromCooker;
 
-public class CoockerStatus extends AbstractCoockerStatus {
+public class CookerStatus extends AbstractCoockerStatus {
 
-	public CoockerStatus(ServiceConfiguration serviceConfiguration) {
+	public CookerStatus(ServiceConfiguration serviceConfiguration) {
 		super(serviceConfiguration);
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	protected Boolean onStateFromCooker(StateFromCooker stateFromCooker,
 			DiscoverForStateFromCooker discover) {
-
 		String CookerState = discover.cookers().anyOne().toString();
 		String ElectricConsumption = discover.electricMeters().anyOne().toString();
 
@@ -41,7 +41,8 @@ public class CoockerStatus extends AbstractCoockerStatus {
 			DiaLog.warning("Probleme de CoockerStatus.java / Aucune condition");
 			return null;
 		}
-
 	}
+
+
 
 }
