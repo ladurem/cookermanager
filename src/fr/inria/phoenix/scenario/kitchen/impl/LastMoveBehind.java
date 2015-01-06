@@ -17,7 +17,6 @@ public class LastMoveBehind extends AbstractLastMoveBehindKitchen {
 	protected Float onMotionFromMotionDetectorBehindKitchen(
 			MotionFromMotionDetectorBehindKitchen motionFromMotionDetectorBehindKitchen,
 			DiscoverForMotionFromMotionDetectorBehindKitchen discover) {
-		motionFromMotionDetectorBehindKitchen.sender().
 		MotionFromMotionDetectorBehindKitchen detector = motionFromMotionDetectorBehindKitchen;
 		if (detector.equals("1")) {
 			lastMove = 0;
