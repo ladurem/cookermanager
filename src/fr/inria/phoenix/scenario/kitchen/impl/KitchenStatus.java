@@ -3,6 +3,7 @@ package fr.inria.phoenix.scenario.kitchen.impl;
 import fr.inria.diagen.core.ServiceConfiguration;
 import fr.inria.phoenix.diasuite.framework.context.cookerstatus.CookerStatusValue;
 import fr.inria.phoenix.diasuite.framework.context.kitchenstatus.AbstractKitchenStatus;
+import fr.inria.phoenix.scenario.kitchen.impl.context.Config;
 
 public class KitchenStatus extends AbstractKitchenStatus{
 
@@ -19,8 +20,19 @@ public class KitchenStatus extends AbstractKitchenStatus{
 		Float LastMoveSensor2 = discover.lastMove().getSensor2().floatValue();
 		String IsDoorOpen = discover.contactSensors().anyOne().toString();
 		CookerStatusValue IsCoockerIsOn = cookerStatusValue;
-			
-		//TODO A configurer en fonction des temps d'alertes
+		
+		
+		// Cuisinière allumée
+		if(IsCoockerIsOn.value()){
+			// Personne devant la cuisinière
+			if(LastMoveSensor1 == 0){
+				// Minuteur défini ?
+				if (Config.timer_user != -1){
+					
+				}
+				
+			}
+		}
 		
 		
 		System.out.println("#DEBUG: SENSOR1"+LastMoveSensor1+" SENSOR2:"+LastMoveSensor2+" DOORSTATUS:"+IsDoorOpen+" COOKERSTATUS"+IsCoockerIsOn);
