@@ -7,32 +7,61 @@ import fr.inria.phoenix.diasuite.framework.device.motiondetector.MotionFromMotio
 
 public class LastMove extends AbstractLastMove {
 
-
 	public LastMove(ServiceConfiguration serviceConfiguration) {
 		super(serviceConfiguration);
 	}
+	
 
-	float lastMove = 0;
 
 	@Override
-	protected Float onMotionFromMotionDetector(MotionFromMotionDetector motionFromMotionDetector,
+	protected Float onMotionFromMotionDetector(
+			MotionFromMotionDetector motionFromMotionDetector,
 			DiscoverForMotionFromMotionDetector discover) {
-		MotionFromMotionDetector detector = motionFromMotionDetector;
-		
-		if (detector.equals("1")) {
-			lastMove = 0;
-			DiaLog.info("Mouvement detecté");
-			System.out.println("Mouvement detecté");
 
-		} else {
-			lastMove += 1;
-			DiaLog.info("Mouvement non detecté depuis " + lastMove);
-			System.out.println("Mouvement non detecté" + lastMove);
+		//Recuperation de la position du capteur
+		String motionSensorLocation = motionFromMotionDetector.sender().location();
 
+		//Récuperation des autres capteurs
+		MotionDetectorCompositeForMotionFromMotionDetector composite = discover.motionDetectors().whereLocation(motionSensorLocation);
+		Float Sensor1 = null;
+		Float Sensor2 = null;
+		for(MotionDetectorProxyForMotionFromMotionDetector sensor : composite){
+			if(Integer.parseInt(sensor.id()) == 1){
+				if (sensor.getMotion().equals("1")) {
+					Sensor1 = null;
+					DiaLog.info("Mouvement(Sensor1) detecté");
+					System.out.println("Mouvement(Sensor1) detecté");
+
+				} else {
+					Sensor1 += 1;
+					DiaLog.info("Mouvement(Sensor1) non detecté depuis " + Sensor1);
+					System.out.println("Mouvement(Sensor1) non detecté" + Sensor1);
+				}
+			} else {
+				if (sensor.getMotion().equals("1")) {
+					Sensor2 = null;
+					DiaLog.info("Mouvement(Sensor2) detecté");
+					System.out.println("Mouvement(Sensor2) detecté");
+
+				} else {
+					Sensor2 += 1;
+					DiaLog.info("Mouvement(Sensor2) non detecté depuis " + Sensor2);
+					System.out.println("Mouvement(Sensor2) non detecté" + Sensor2);
+				}
+				
+			}
+				
+			
 		}
-		return lastMove;
+		
+		
+		
+		//TODO A gerer le return
+		return Sensor1;
+
+		//return  Float(Sensor1,Sensor2);
 	}
 
-	
+
 
 }
