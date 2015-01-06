@@ -1,7 +1,6 @@
 package fr.inria.phoenix.scenario.kitchen.impl;
 
 import fr.inria.diagen.core.ServiceConfiguration;
-import fr.inria.phoenix.diasuite.framework.context.coockerstatus.CoockerStatusValue;
 import fr.inria.phoenix.diasuite.framework.context.cookerstatus.CookerStatusValue;
 import fr.inria.phoenix.diasuite.framework.context.kitchenstatus.AbstractKitchenStatus;
 
