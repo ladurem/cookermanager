@@ -21,16 +21,15 @@ context CoockerStatus as Boolean{
 	currentElectricConsumption from ElectricMeter
 	always publish;
 }
-
-
-
-
+// TODO A retirer
 device Cooker extends Appliance {
 	source state as State;
 	action ActOnCoocker;
 }
-
-
 action ActOnCoocker {
 	stopCoocker();
+}
+
+enumeration KitchenState {
+	OK,WARN,STOP
 }

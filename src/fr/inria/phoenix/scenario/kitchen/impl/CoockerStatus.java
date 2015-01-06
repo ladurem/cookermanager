@@ -9,7 +9,6 @@ public class CoockerStatus extends AbstractCoockerStatus {
 
 	public CoockerStatus(ServiceConfiguration serviceConfiguration) {
 		super(serviceConfiguration);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

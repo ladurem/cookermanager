@@ -12,12 +12,12 @@ public class KitchenStatus extends AbstractKitchenStatus{
 	}
 
 	@Override
-	protected KitchenStatusValuePublishable onCoockerStatus(CoockerStatusValue coockerStatusValue,
-			DiscoverForCoockerStatus discover) {
+	protected KitchenStatusValuePublishable onCoockerStatus(CoockerStatusValue coockerStatusValue,DiscoverForCoockerStatus discover) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	
 
 
 	
