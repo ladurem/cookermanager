@@ -2,12 +2,8 @@ package fr.inria.phoenix.scenario.kitchen.impl;
 
 import fr.inria.diagen.core.ServiceConfiguration;
 import fr.inria.diagen.log.DiaLog;
-import fr.inria.phoenix.diasuite.framework.context.coockerstate.*;
-import fr.inria.phoenix.diasuite.framework.context.kitchencontext.*;
 import fr.inria.phoenix.diasuite.framework.context.kitchenstatus.KitchenStatusValue;
 import fr.inria.phoenix.diasuite.framework.controller.kitchencontroller.AbstractKitchenController;
-import fr.inria.phoenix.diasuite.framework.datatype.coockerstate.*;
-import fr.inria.phoenix.diasuite.framework.datatype.doorstate.*;
 
 public class Kitchen_controler extends AbstractKitchenController {
 

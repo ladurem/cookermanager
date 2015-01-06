@@ -30,7 +30,7 @@ public class LastMove extends AbstractLastMove {
 			System.out.println("Mouvement non detecté" + lastMove);
 
 		}
-		return null;
+		return lastMove;
 	}
 
 	

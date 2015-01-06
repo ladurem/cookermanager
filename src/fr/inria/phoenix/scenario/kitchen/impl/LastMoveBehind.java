@@ -2,13 +2,7 @@ package fr.inria.phoenix.scenario.kitchen.impl;
 
 import fr.inria.diagen.core.ServiceConfiguration;
 import fr.inria.diagen.log.DiaLog;
-import fr.inria.phoenix.diasuite.framework.context.coockerstate.*;
-import fr.inria.phoenix.diasuite.framework.context.kitchencontext.*;
-import fr.inria.phoenix.diasuite.framework.context.kitchenstatus.KitchenStatusValue;
 import fr.inria.phoenix.diasuite.framework.context.lastmovebehindkitchen.AbstractLastMoveBehindKitchen;
-import fr.inria.phoenix.diasuite.framework.controller.kitchencontroller.AbstractKitchenController;
-import fr.inria.phoenix.diasuite.framework.datatype.coockerstate.*;
-import fr.inria.phoenix.diasuite.framework.datatype.doorstate.*;
 import fr.inria.phoenix.diasuite.framework.device.motiondetectorbehindkitchen.MotionFromMotionDetectorBehindKitchen;
 
 public class LastMoveBehind extends AbstractLastMoveBehindKitchen {
@@ -23,7 +17,7 @@ public class LastMoveBehind extends AbstractLastMoveBehindKitchen {
 	protected Float onMotionFromMotionDetectorBehindKitchen(
 			MotionFromMotionDetectorBehindKitchen motionFromMotionDetectorBehindKitchen,
 			DiscoverForMotionFromMotionDetectorBehindKitchen discover) {
-
+		motionFromMotionDetectorBehindKitchen.sender().
 		MotionFromMotionDetectorBehindKitchen detector = motionFromMotionDetectorBehindKitchen;
 		if (detector.equals("1")) {
 			lastMove = 0;

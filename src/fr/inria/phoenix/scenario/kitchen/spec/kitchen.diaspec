@@ -6,11 +6,13 @@ controller KitchenController {
 }
 
 context KitchenStatus as KitchenState {
-	when provided LastMove get state from ContactSensor maybe publish;
-	when provided LastMoveBehindKitchen get state from ContactSensor maybe publish;
-	when provided CoockerState  maybe publish;
+//	when provided LastMove maybe publish;
+//	when provided LastMoveBehindKitchen maybe publish;
+	when provided CoockerState 
+	get timerTriggered from Timer,
+	LastMove,LastMoveBehindKitchen	maybe publish;
+	
 }
-
 
 context LastMove as Float {
 	when provided motion from MotionDetector get motion from MotionDetector always publish;
@@ -19,7 +21,8 @@ context LastMove as Float {
 context LastMoveBehindKitchen as Float {
 	when provided motion from MotionDetectorBehindKitchen get motion from MotionDetectorBehindKitchen always publish;
 }
-context CoockerState as Boolean{
+
+context CoockerState as Boolean {
 	when provided statusCoocker from SmartSwich always publish;
 }
 
@@ -39,7 +42,6 @@ device MotionDetector extends Sensor {
 	source motion as StatePresence;
 }
 
-
 device SmartSwich extends Appliance {
 	source statusCoocker as CoockerState;
 }
@@ -49,11 +51,14 @@ device Cooker extends Appliance {
 	action ActOnCoocker;
 }
 
+device Timer extends BuiltIn {
+	source timerTriggered as String indexed by timerId as String;
+}
+
 action ActOnCoocker {
 	stopCoocker();
 }
-	
-	
+
 enumeration StatePresence {
 	TARGET, MISSED
 }
