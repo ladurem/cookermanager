@@ -14,7 +14,7 @@ public class Test {
 			e.printStackTrace();
 		}
 		System.out.println("CHANGED");
-		kt.setTimer(10000);
+		kt.setInterval(2000);
 	}
 	
 }

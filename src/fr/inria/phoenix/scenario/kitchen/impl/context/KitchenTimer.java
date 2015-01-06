@@ -5,11 +5,10 @@ import java.util.TimerTask;
 
 
 public class KitchenTimer {
- 
-	// Timer value = 15 minutes
-	public long timer = 15*60*1000;
-	// Interval = 1s
-	public final int INTERVAL = 1000;
+	
+	public long timer = Config.timer;
+	public long interval = Config.INTERVAL;
+	
 	public boolean running = true;
 	public Timer t;
 	
@@ -31,15 +30,27 @@ public class KitchenTimer {
 		this.timer = timer;
 	}
 	
+	public long getInterval(){
+		return interval;
+	}
+	
+	public void setInterval(long interval){
+		this.interval = interval;
+	}
+	
+	public void stopTimer(){
+		t.cancel();
+		timer = Config.timer;
+	}
+	
 	public void timer(){
 
-		
 		t = new Timer();
 		TimerTask timerTask = new TimerTask() {
 			  @Override
 			  public void run() {
 				  if (timer > 0){
-		    	    	timer -=1000;
+		    	    	timer -= interval;
 		    	    	System.out.println(timer);
 		    	    }
 		    	    else{
@@ -50,6 +61,6 @@ public class KitchenTimer {
 			  }
 		};
 		
-		t.scheduleAtFixedRate(timerTask, 0, INTERVAL);	
+		t.scheduleAtFixedRate(timerTask, 0, interval);	
 	}
 }
