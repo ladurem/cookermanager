@@ -15,6 +15,7 @@ public class CookerStatus extends AbstractCookerStatus {
 	@Override
 	protected Boolean onStateFromCooker(StateFromCooker stateFromCooker,
 			DiscoverForStateFromCooker discover) {
+		
 		String CookerState = discover.cookers().anyOne().toString();
 		String ElectricConsumption = discover.electricMeters().anyOne().toString();
 
