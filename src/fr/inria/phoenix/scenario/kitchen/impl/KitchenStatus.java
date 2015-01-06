@@ -11,28 +11,40 @@ public class KitchenStatus extends AbstractKitchenStatus{
 
 	public KitchenStatus(ServiceConfiguration serviceConfiguration) {
 		super(serviceConfiguration);
-		}
+	}
 
 	@Override
-	protected KitchenState onLastMove(LastMoveValue lastMoveValue,
-			DiscoverForLastMove discover) {
+	protected KitchenStatusValuePublishable onLastMove(	LastMoveValue lastMoveValue, DiscoverForLastMove discover) {
 		// TODO Auto-generated method stub
+		
+		final LastMoveValue LastMoveValueKitchen = lastMoveValue;
+		System.out.println("LastMoveValueKitchen="+LastMoveValueKitchen);
+		
+		
+		
 		return null;
 	}
 
 	@Override
-	protected KitchenState onLastMoveBehindKitchen(
-			LastMoveBehindKitchenValue lastMoveBehindKitchenValue,
-			DiscoverForLastMoveBehindKitchen discover) {
+	protected KitchenStatusValuePublishable onLastMoveBehindKitchen(LastMoveBehindKitchenValue lastMoveBehindKitchenValue,DiscoverForLastMoveBehindKitchen discover) {
 		// TODO Auto-generated method stub
+		
+		final LastMoveBehindKitchenValue LastMoveValueKitchenBehind = lastMoveBehindKitchenValue;
+		System.out.println("LastMoveValueKitchenBehind="+LastMoveValueKitchenBehind);
+		
+		
 		return null;
 	}
 
 	@Override
-	protected KitchenState onCoockerState(CoockerStateValue coockerStateValue) {
+	protected KitchenStatusValuePublishable onCoockerState(CoockerStateValue coockerStateValue) {
 		// TODO Auto-generated method stub
+
+		
 		return null;
 	}
+
+	
 	
 
 }

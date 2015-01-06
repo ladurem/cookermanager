@@ -24,22 +24,18 @@ public class Kitchen_controler extends AbstractKitchenController {
 		KitchenStatusValue status = kitchenStatus;
 		
 		//TODO a finir
-//		switch (status) {
-//		case "WARN":
-//
-//			break;
-//		case "OK":
-//
-//			break;
-//		case "STOP":
-//
-//			break;
-//		default:
-//			DiaLog.warning("Erreur critique");
-//			System.out.println("Erreur critique");
-//			return;
-//			break;
-//		}
+		if(status.equals("WARN")){
+			
+		}else if(status.equals("STOP")){
+			
+		}else if(status.equals("OK")){
+			
+		}else{
+			DiaLog.warning("Erreur critique");
+			System.out.println("Erreur critique");
+			return;
+		}
+		
 
 	}
 }

@@ -6,10 +6,11 @@ controller KitchenController {
 }
 
 context KitchenStatus as KitchenState {
-	when provided LastMove get state from ContactSensor always publish;
-	when provided LastMoveBehindKitchen get state from ContactSensor always publish;
-	when provided CoockerState  always publish;
+	when provided LastMove get state from ContactSensor maybe publish;
+	when provided LastMoveBehindKitchen get state from ContactSensor maybe publish;
+	when provided CoockerState  maybe publish;
 }
+
 
 context LastMove as Float {
 	when provided motion from MotionDetector get motion from MotionDetector always publish;
