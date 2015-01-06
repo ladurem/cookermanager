@@ -19,7 +19,6 @@ public class KitchenTimer {
 	
 	public KitchenTimer(long timer){
 		this.timer = timer;
-		timer();
 	}
 	
 	public long getTimer(){
@@ -41,6 +40,14 @@ public class KitchenTimer {
 	public void stopTimer(){
 		t.cancel();
 		timer = Config.timer;
+	}
+	
+	public void startTimer(){
+		timer();
+	}
+	
+	public boolean status(){
+		return running;
 	}
 	
 	public void timer(){
