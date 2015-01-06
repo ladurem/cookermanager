@@ -22,48 +22,15 @@ context CoockerStatus as Boolean{
 	always publish;
 }
 
-device ContactSensor extends Sensor {
-	source state as DoorState;
-}
 
-device MotionDetector extends Sensor {
-	source motion as StatePresence;
-}
+
 
 device Cooker extends Appliance {
 	source state as State;
 	action ActOnCoocker;
 }
 
-device Timer extends BuiltIn {
-	source timerTriggered as String indexed by timerId as String;
-}
 
 action ActOnCoocker {
 	stopCoocker();
-}
-
-device ElectricMeter extends EnergyMeter {
-	source electricConsumption as Float indexed by date as Date;
-	source currentElectricConsumption as Float;
-}
-
-enumeration StatePresence {
-	TARGET, MISSED
-}
-
-enumeration DoorState {
-	OPEN, CLOSED
-}
-
-structure State {
-	state as String;
-	timestamp as String;
-}
-
-enumeration CoockerState {
-	ON, OFF
-}
-enumeration KitchenState {
-	OK,WARN,STOP
 }
