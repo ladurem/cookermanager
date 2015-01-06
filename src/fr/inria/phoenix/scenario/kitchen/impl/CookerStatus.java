@@ -2,10 +2,10 @@ package fr.inria.phoenix.scenario.kitchen.impl;
 
 import fr.inria.diagen.core.ServiceConfiguration;
 import fr.inria.diagen.log.DiaLog;
-import fr.inria.phoenix.diasuite.framework.context.coockerstatus.AbstractCoockerStatus;
+import fr.inria.phoenix.diasuite.framework.context.cookerstatus.AbstractCookerStatus;
 import fr.inria.phoenix.diasuite.framework.device.cooker.StateFromCooker;
 
-public class CookerStatus extends AbstractCoockerStatus {
+public class CookerStatus extends AbstractCookerStatus {
 
 	public CookerStatus(ServiceConfiguration serviceConfiguration) {
 		super(serviceConfiguration);
