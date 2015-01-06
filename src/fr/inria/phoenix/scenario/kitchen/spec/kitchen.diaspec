@@ -1,8 +1,11 @@
 include "taxonomy.diaspec";
 
 // kitchen controller
-controller KitchenController {
-	when provided KitchenStatus do ActOnCooker on Cooker;
+controller KitchenController{
+	when provided KitchenStatus 
+	do Off on Cooker,
+	SendMessage on Messenger;
+
 }
 
 context KitchenStatus as KitchenState {
@@ -22,13 +25,6 @@ context CookerStatus as Boolean{
 	always publish;
 }
 // TODO A retirer
-device Cooker extends Appliance {
-	source state as State;
-	action ActOnCooker;
-}
-action ActOnCooker {
-	stopCooker();
-}
 
 enumeration KitchenState {
 	OK,WARN,STOP
