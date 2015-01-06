@@ -169,6 +169,15 @@ device Device {
 	source isAlive as Boolean;
 }
 
+device Cooker extends Appliance {
+	source state as State;
+}
+
+structure State {
+	state as String;
+	timestamp as String;
+}
+
 //-------------------------
 //-- Services
 //-------------------------
@@ -231,6 +240,9 @@ device CommunicationService extends NotificationService {
 device Mailer extends CommunicationService {
 }
 
+device InstantMessenger extends CommunicationService {
+}
+
 device AddressBook extends Device {
 	attribute owner as String;
 	source contacts as Contact [] indexed by filter as Contact;
@@ -257,6 +269,10 @@ device PhysicalDevice extends Device {
 device Sensor extends PhysicalDevice {
 }
 
+device ContactSensor extends Sensor {
+	source state as State;
+}
+
 device MotionDetector extends Sensor {
 	source motion as Boolean;
 }
@@ -267,10 +283,6 @@ device LightSensor extends Sensor {
 
 device TemperatureSensor extends Sensor {
 	source temperature as Float indexed by unit as TemperatureUnit;
-}
-
-device ContactSensor extends Sensor {
-	source state as Boolean;
 }
 
 device SmokeSensor extends Sensor {
@@ -302,6 +314,15 @@ device WaterMeter extends EnergyMeter {
 device GasMeter extends EnergyMeter {
 	source gasConsumption as Float indexed by date as Date;
 	source currentGasConsumption as Float;
+}
+
+//------------------
+// MESSENGERS
+//------------------------------------
+device Messenger extends PhysicalDevice {
+	action SendMessage;
+	//attribute modality as Modality;
+
 }
 
 // Appliances
