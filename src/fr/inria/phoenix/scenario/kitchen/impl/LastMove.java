@@ -22,12 +22,14 @@ public class LastMove extends AbstractLastMove {
 
 		//Récuperation des autres capteurs
 		MotionDetectorCompositeForMotionFromMotionDetector composite = discover.motionDetectors().whereLocation(motionSensorLocation);
-		Float Sensor1 = null;
-		Float Sensor2 = null;
+		
+		Float Sensor1 = 0f;
+		Float Sensor2 = 0f;
+		
 		for(MotionDetectorProxyForMotionFromMotionDetector sensor : composite){
 			if(Integer.parseInt(sensor.id()) == 1){
 				if (sensor.getMotion().equals("1")) {
-					Sensor1 = null;
+					Sensor1 = 0f;
 					DiaLog.info("Mouvement(Sensor1) detecté");
 					System.out.println("Mouvement(Sensor1) detecté");
 
@@ -38,7 +40,7 @@ public class LastMove extends AbstractLastMove {
 				}
 			} else {
 				if (sensor.getMotion().equals("1")) {
-					Sensor2 = null;
+					Sensor2 = 0f;
 					DiaLog.info("Mouvement(Sensor2) detecté");
 					System.out.println("Mouvement(Sensor2) detecté");
 
