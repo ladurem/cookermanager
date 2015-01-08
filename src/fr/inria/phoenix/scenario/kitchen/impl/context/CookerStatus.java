@@ -18,7 +18,6 @@ public class CookerStatus extends AbstractCookerStatus {
 		
 		String CookerState = discover.cookers().anyOne().toString();
 		String ElectricConsumption = discover.electricMeters().anyOne().toString();
-
 		if (CookerState.equals("ON")
 				&& Integer.parseInt(ElectricConsumption) != 0) {
 			return true;

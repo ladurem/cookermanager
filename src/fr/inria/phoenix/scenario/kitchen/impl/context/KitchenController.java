@@ -23,6 +23,9 @@ public class KitchenController extends AbstractKitchenController {
 		if (kitchenStatus.value().equals("STOP")) {
 
 		}
+		if(kitchenStatus.value().equals("RUNTIMER")){
+			discover.timers().all().schedule(null, 1000);
+		}
 
 		// Extinction de la gaziniere
 		discover.cookers().all().off();

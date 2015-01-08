@@ -4,14 +4,22 @@ include "taxonomy.diaspec";
 controller KitchenController{
 	when provided KitchenStatus 
 	do Off on Cooker,
-	SendMessage on Messenger;
+	SendMessage on Messenger,
+	ScheduleTimer on Timer;
 
 }
 
 context KitchenStatus as KitchenState {
+	when provided CookerStatus
+	get timerTriggered from Timer, LastMove,CookerStatus, state from ContactSensor 
+	maybe publish;
+	
+	
 	when provided timerTriggered from Timer 
 	get timerTriggered from Timer, LastMove,CookerStatus, state from ContactSensor 
 	maybe publish;
+	
+
 }
 structure GetSensor{
 	sensor1 as Float;
@@ -28,5 +36,5 @@ context CookerStatus as Boolean{
 }
 
 enumeration KitchenState {
-	OK,WARN,STOP
+	OK,WARN,STOP,RUNTIMER
 }
