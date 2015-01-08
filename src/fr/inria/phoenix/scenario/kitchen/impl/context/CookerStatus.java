@@ -26,6 +26,7 @@ System.out.println("test");
 		
 		if (CookerState.equals("ON")
 				&& ElectricConsumption != 0) {
+			DiaLog.warning("système allumé");
 			return true;
 		} else if (CookerState.equals("ON")
 				&& ElectricConsumption == 0) {
@@ -39,7 +40,7 @@ System.out.println("test");
 			return false;
 		} else if (CookerState.equals("OFF")
 				&& ElectricConsumption == 0) {
-			// Systeme eteint
+			DiaLog.warning("Système éteint");
 			return false;
 		} else {
 			System.out.println("Probleme de CoockerStatus.java / Aucune condition");
