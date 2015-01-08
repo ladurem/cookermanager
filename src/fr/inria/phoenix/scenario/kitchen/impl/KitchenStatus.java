@@ -4,6 +4,7 @@ import fr.inria.diagen.core.ServiceConfiguration;
 import fr.inria.phoenix.diasuite.framework.context.kitchenstatus.AbstractKitchenStatus;
 import fr.inria.phoenix.diasuite.framework.context.lastmove.LastMoveValue;
 import fr.inria.phoenix.scenario.kitchen.impl.context.Config;
+import fr.inria.phoenix.scenario.kitchen.impl.context.KitchenTimer;
 
 public class KitchenStatus extends AbstractKitchenStatus{
 
@@ -22,16 +23,28 @@ public class KitchenStatus extends AbstractKitchenStatus{
 			
 		//TODO A configurer en fonction des temps d'alertes
 	
-		
 		// Cuisinière allumée
 		if(IsCoockerIsOn.value() != null){
+			
+			// Initialisation du timer
+			if (Config.kitchenTimer == null){
+				Config.kitchenTimer = new KitchenTimer();
+			}
+			
 			// Personne devant la cuisinière
 			if(LastMoveSensor1 == 0){
 				// Minuteur défini ?
 				if (Config.timer_user != -1){
-					
+					// TODO
 				}
-				
+				else{
+					if (Config.kitchenTimer != null)
+						Config.kitchenTimer.stopTimer();
+				}
+			}
+			// Personne dans cuisine
+			else if(LastMoveSensor2 == 0){
+				// TODO
 			}
 		}
 		
