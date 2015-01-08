@@ -1,6 +1,7 @@
 package fr.inria.phoenix.scenario.kitchen.impl.context;
 
 import fr.inria.diagen.core.ServiceConfiguration;
+import fr.inria.diagen.log.DiaLog;
 import fr.inria.phoenix.diasuite.framework.context.kitchenstatus.KitchenStatusValue;
 import fr.inria.phoenix.diasuite.framework.controller.kitchencontroller.AbstractKitchenController;
 
@@ -13,7 +14,9 @@ public class KitchenController extends AbstractKitchenController {
 	@Override
 	protected void onKitchenStatus(KitchenStatusValue kitchenStatus,
 			DiscoverForKitchenStatus discover) {
-
+		
+		DiaLog.info("Controller");
+		
 		if (kitchenStatus.value().equals("OK")) {
 
 		}
@@ -21,7 +24,7 @@ public class KitchenController extends AbstractKitchenController {
 
 		}
 		if (kitchenStatus.value().equals("STOP")) {
-
+			discover.cookers().all().off();
 		}
 		if(kitchenStatus.value().equals("RUNTIMER")){
 			discover.timers().all().schedule(null, 1000);
@@ -30,7 +33,7 @@ public class KitchenController extends AbstractKitchenController {
 		// Extinction de la gaziniere
 		discover.cookers().all().off();
 		// Envoi d'une notification
-		discover.messengers().all().sendMessage(null, "Titre", "MEssage", null);
+		discover.messengers().all().sendMessage(null, "Titre", "Message", null);
 
 	}
 }

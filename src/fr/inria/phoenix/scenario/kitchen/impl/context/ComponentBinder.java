@@ -16,25 +16,47 @@ public class ComponentBinder extends AppComponentBinder {
 	@Override
 	public Class<? extends AbstractCookerStatus> getCookerStatusClass() {
 		// TODO Auto-generated method stub
-		return null;
+		return CookerStatus.class;
 	}
 
 	@Override
 	public Class<? extends AbstractKitchenStatus> getKitchenStatusClass() {
 		// TODO Auto-generated method stub
-		return null;
+		return KitchenStatus.class;
 	}
 
 	@Override
 	public Class<? extends AbstractLastMove> getLastMoveClass() {
 		// TODO Auto-generated method stub
-		return null;
+		return LastMove.class;
 	}
 
 	@Override
 	public Class<? extends AbstractKitchenController> getKitchenControllerClass() {
 		// TODO Auto-generated method stub
-		return null;
+		return KitchenController.class;
+	}
+	
+	public static void main(String[] args) {
+		ComponentBinder binder = new ComponentBinder();
+		binder.deployAll();
+		
+
+		/*ControlPanel controlPanel = new ControlPanel(
+				binder.getServiceConfiguration("ControlPanel_1"),"ControlPanel", "A29", "phoenix");
+
+		HVACSystem hvacSystem = new HVACSystem(new LocalServiceConfiguration("HvacSystem_1"), "HvacSystem", "A29", "phoenix");
+
+		TemperatureSensor temperatureSensor = new TemperatureSensor(new LocalServiceConfiguration("TemperatureSensor_1"),"TemperatureSensor", "A29", "phoenix");
+
+		binder.deploy(controlPanel);
+		binder.deploy(hvacSystem);
+		binder.deploy(temperatureSensor);
+
+		temperatureSensor.show();
+		controlPanel.show();
+		hvacSystem.show();
+		*/
 	}
 
 	
