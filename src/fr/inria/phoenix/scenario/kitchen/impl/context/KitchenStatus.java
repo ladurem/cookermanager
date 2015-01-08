@@ -3,6 +3,7 @@ package fr.inria.phoenix.scenario.kitchen.impl.context;
 import fr.inria.diagen.core.ServiceConfiguration;
 import fr.inria.phoenix.diasuite.framework.context.kitchenstatus.AbstractKitchenStatus;
 import fr.inria.phoenix.diasuite.framework.context.lastmove.LastMoveValue;
+import fr.inria.phoenix.diasuite.framework.device.timer.TimerTriggeredFromTimer;
 import fr.inria.phoenix.scenario.kitchen.impl.context.Config;
 import fr.inria.phoenix.scenario.kitchen.impl.context.KitchenTimer;
 
@@ -14,17 +15,19 @@ public class KitchenStatus extends AbstractKitchenStatus{
 	}
 
 	@Override
-	protected KitchenStatusValuePublishable onLastMove(
-			LastMoveValue lastMoveValue, DiscoverForLastMove discover) {
+	protected KitchenStatusValuePublishable onTimerTriggeredFromTimer(
+			TimerTriggeredFromTimer timerTriggeredFromTimer,
+			DiscoverForTimerTriggeredFromTimer discover) {
 		Float LastMoveSensor1 = discover.lastMove().getSensor1().floatValue();
 		Float LastMoveSensor2 = discover.lastMove().getSensor2().floatValue();
 		String IsDoorOpen = discover.contactSensors().anyOne().toString();
-		LastMoveValue IsCoockerIsOn = lastMoveValue;
+		boolean IsCookerSwitchOn = discover.cookerStatus().booleanValue();
+		String TimerTrigger = timerTriggeredFromTimer.value();
 			
 		//TODO A configurer en fonction des temps d'alertes
 	
 		// Cuisinière allumée
-		if(IsCoockerIsOn.value() != null){
+		if(!TimerTrigger.isEmpty()){
 			
 			// Initialisation du timer
 			if (Config.kitchenTimer == null){
@@ -49,12 +52,10 @@ public class KitchenStatus extends AbstractKitchenStatus{
 		}
 		
 		
-		System.out.println("#DEBUG: SENSOR1"+LastMoveSensor1+" SENSOR2:"+LastMoveSensor2+" DOORSTATUS:"+IsDoorOpen+" COOKERSTATUS"+IsCoockerIsOn);
+		System.out.println("#DEBUG: SENSOR1"+LastMoveSensor1+" SENSOR2:"+LastMoveSensor2+" DOORSTATUS:"+IsDoorOpen+" COOKERSTATUS"+IsCookerSwitchOn);
 
 		return null;
 	}
-
-
 
 
 	
