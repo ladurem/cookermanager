@@ -1,9 +1,8 @@
-package fr.inria.phoenix.scenario.kitchen.impl;
+package fr.inria.phoenix.scenario.kitchen.impl.context;
 
 import fr.inria.diagen.core.ServiceConfiguration;
 import fr.inria.phoenix.diasuite.framework.context.kitchenstatus.AbstractKitchenStatus;
 import fr.inria.phoenix.diasuite.framework.context.lastmove.LastMoveValue;
-import fr.inria.phoenix.scenario.kitchen.impl.context.Config;
 
 public class KitchenStatus extends AbstractKitchenStatus{
 
