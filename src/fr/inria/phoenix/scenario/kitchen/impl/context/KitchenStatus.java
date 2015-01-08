@@ -1,6 +1,7 @@
 package fr.inria.phoenix.scenario.kitchen.impl.context;
 
 import fr.inria.diagen.core.ServiceConfiguration;
+import fr.inria.diagen.log.DiaLog;
 import fr.inria.phoenix.diasuite.framework.context.cookerstatus.CookerStatusValue;
 import fr.inria.phoenix.diasuite.framework.context.kitchenstatus.AbstractKitchenStatus;
 import fr.inria.phoenix.diasuite.framework.context.lastmove.LastMoveValue;
@@ -20,6 +21,8 @@ public class KitchenStatus extends AbstractKitchenStatus{
 	protected KitchenStatusValuePublishable onTimerTriggeredFromTimer(
 			TimerTriggeredFromTimer timerTriggeredFromTimer,
 			DiscoverForTimerTriggeredFromTimer discover) {
+		DiaLog.debug("KitchenStatusValuePublishable");
+		
 		//VERIFICATION PERIODIQUE
 		
 		Float LastMoveSensor1 = discover.lastMove().getSensor1().floatValue();
@@ -27,13 +30,15 @@ public class KitchenStatus extends AbstractKitchenStatus{
 		String IsDoorOpen = discover.contactSensors().anyOne().toString();
 		boolean IsCookerSwitchOn = discover.cookerStatus().booleanValue();
 		String TimerTrigger = timerTriggeredFromTimer.value();
+		
 		//TODO A configurer en fonction des temps d'alertes
+		DiaLog.debug("Timer value : "+ TimerTrigger);
 	
 		// Cuisinière allumée
 		if(!TimerTrigger.isEmpty()){
 			
 			// Initialisation du timer
-			if (Config.kitchenTimer == null){
+			if (Config.kitchenTimer == null){	// TODO : add 
 				Config.kitchenTimer = new KitchenTimer();
 			}
 			
@@ -47,10 +52,18 @@ public class KitchenStatus extends AbstractKitchenStatus{
 					if (Config.kitchenTimer != null)
 						Config.kitchenTimer.stopTimer();
 				}
+				return new KitchenStatusValuePublishable(KitchenState.OK, true);
 			}
-			// Personne dans cuisine
+			// Personne dans cuisine 
 			else if(LastMoveSensor2 == 0){
 				// TODO
+				// Rien ne se passe ?
+			}
+			// Personne hors de la cuisine
+			else if(LastMoveSensor1 != 0 && LastMoveSensor2 !=0){
+				Config.kitchenTimer.setInterval(1500);
+				DiaLog.debug(Long.toString(Config.kitchenTimer.getInterval()));
+				return new KitchenStatusValuePublishable(KitchenState.STOP, true);
 			}
 		}
 		
@@ -65,6 +78,7 @@ public class KitchenStatus extends AbstractKitchenStatus{
 			DiscoverForCookerStatus discover) {
 		// PREMIER LANCEMENT :
 		// FONCTINNEMENT NORMAL ET LANCEMENT DU TIMER
+		System.out.println("KITCHEN STATUS VP 2");
 		
 		
 		

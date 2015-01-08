@@ -18,6 +18,8 @@ public class LastMove extends AbstractLastMove {
 	protected GetSensor onMotionFromMotionDetector(
 			MotionFromMotionDetector motionFromMotionDetector,
 			DiscoverForMotionFromMotionDetector discover) {
+		
+		DiaLog.info("GetSensor");
 
 		//Recuperation de la position du capteur
 		String motionSensorLocation = motionFromMotionDetector.sender().location();
@@ -56,6 +58,7 @@ public class LastMove extends AbstractLastMove {
 				
 			
 		}
+		DiaLog.info("LM : BEFORE RETURN");
 		
 		return new GetSensor(Sensor1,Sensor2) ;
 		}

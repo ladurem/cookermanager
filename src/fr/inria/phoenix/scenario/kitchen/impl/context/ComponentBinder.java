@@ -36,10 +36,27 @@ public class ComponentBinder extends AppComponentBinder {
 		// TODO Auto-generated method stub
 		return KitchenController.class;
 	}
-
+	
 	public static void main(String[] args) {
 		ComponentBinder binder = new ComponentBinder();
 		binder.deployAll();
+		
+
+		/*ControlPanel controlPanel = new ControlPanel(
+				binder.getServiceConfiguration("ControlPanel_1"),"ControlPanel", "A29", "phoenix");
+
+		HVACSystem hvacSystem = new HVACSystem(new LocalServiceConfiguration("HvacSystem_1"), "HvacSystem", "A29", "phoenix");
+
+		TemperatureSensor temperatureSensor = new TemperatureSensor(new LocalServiceConfiguration("TemperatureSensor_1"),"TemperatureSensor", "A29", "phoenix");
+
+		binder.deploy(controlPanel);
+		binder.deploy(hvacSystem);
+		binder.deploy(temperatureSensor);
+
+		temperatureSensor.show();
+		controlPanel.show();
+		hvacSystem.show();
+		*/
 	}
 
 }

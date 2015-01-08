@@ -14,7 +14,9 @@ public class KitchenController extends AbstractKitchenController {
 	@Override
 	protected void onKitchenStatus(KitchenStatusValue kitchenStatus,
 			DiscoverForKitchenStatus discover) {
-
+		
+		DiaLog.info("Controller");
+		
 		if (kitchenStatus.value().equals("OK")) {
 			DiaLog.debug("KitchenStatus = OK");
 			System.out.println("KitchenStatus = OK");
@@ -40,5 +42,12 @@ public class KitchenController extends AbstractKitchenController {
 		System.out.println("Fin du controlleur");
 		return;
 		
+//
+//		// Extinction de la gaziniere
+//		discover.cookers().all().off();
+//		// Envoi d'une notification
+//		discover.messengers().all().sendMessage(null, "Titre", "Message", null);
+//
+//
 	}
 }
