@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <DiaGraph>
-	<controller id="KitchenController" x="460.0" y="190.0"/>
-	<action id="Cooker/Off" x="353.0" y="109.0"/>
-	<action id="Messenger/SendMessage" x="567.0" y="105.0"/>
-	<context id="KitchenStatus" x="469.0" y="324.0"/>
-	<context id="LastMove" x="120.0" y="431.0"/>
-	<source id="MotionDetector/motion" x="120.0" y="551.0"/>
-	<context id="CookerStatus" x="382.0" y="461.0"/>
-	<source id="Cooker/state" x="300.0" y="551.0"/>
-	<source id="ElectricMeter/currentElectricConsumption" x="480.0" y="551.0"/>
-	<source id="ContactSensor/state" x="660.0" y="551.0"/>
-	<source id="Timer/timerTriggered" x="839.0" y="546.0"/>
-	<action id="Timer/ScheduleTimer" x="742.0" y="107.0"/>
+	<controller id="KitchenController" x="300.0" y="191.0"/>
+	<action id="Timer/ScheduleTimer" x="120.0" y="71.0"/>
+	<action id="Messenger/SendMessage" x="300.0" y="71.0"/>
+	<action id="Cooker/Off" x="480.0" y="71.0"/>
+	<context id="KitchenStatus" x="300.0" y="311.0"/>
+	<context id="CookerStatus" x="210.0" y="431.0"/>
+	<source id="ElectricMeter/currentElectricConsumption" x="210.0" y="551.0"/>
+	<source id="Cooker/state" x="390.0" y="551.0"/>
+	<context id="LastMove" x="390.0" y="431.0"/>
+	<source id="MotionDetector/motion" x="570.0" y="551.0"/>
+	<source id="Timer/timerTriggered" x="750.0" y="551.0"/>
+	<source id="ContactSensor/state" x="930.0" y="551.0"/>
 </DiaGraph>

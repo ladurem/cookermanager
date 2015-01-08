@@ -68,7 +68,7 @@ public class KitchenStatus extends AbstractKitchenStatus{
 		
 		
 		
-		return null;
+		return new KitchenStatusValuePublishable(KitchenState.OK, true);
 	}
 
 

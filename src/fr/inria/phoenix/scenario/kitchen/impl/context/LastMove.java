@@ -11,6 +11,8 @@ public class LastMove extends AbstractLastMove {
 	public LastMove(ServiceConfiguration serviceConfiguration) {
 		super(serviceConfiguration);
 	}
+	Float Sensor1 = 0f;
+	Float Sensor2 = 0f;
 
 	@Override
 	protected GetSensor onMotionFromMotionDetector(
@@ -23,12 +25,12 @@ public class LastMove extends AbstractLastMove {
 		//Récuperation des autres capteurs
 		MotionDetectorCompositeForMotionFromMotionDetector composite = discover.motionDetectors().whereLocation(motionSensorLocation);
 		
-		Float Sensor1 = 0f;
-		Float Sensor2 = 0f;
+
 		
 		for(MotionDetectorProxyForMotionFromMotionDetector sensor : composite){
+			System.out.println("VAL CAPTEUR"+sensor.getMotion());
 			if(Integer.parseInt(sensor.id()) == 1){
-				if (sensor.getMotion().equals("1")) {
+				if (sensor.getMotion()) {
 					Sensor1 = 0f;
 					DiaLog.info("Mouvement(Sensor1) detecté");
 					System.out.println("Mouvement(Sensor1) detecté");
@@ -39,7 +41,7 @@ public class LastMove extends AbstractLastMove {
 					System.out.println("Mouvement(Sensor1) non detecté" + Sensor1);
 				}
 			} else {
-				if (sensor.getMotion().equals("1")) {
+				if (sensor.getMotion()) {
 					Sensor2 = 0f;
 					DiaLog.info("Mouvement(Sensor2) detecté");
 					System.out.println("Mouvement(Sensor2) detecté");
@@ -55,13 +57,8 @@ public class LastMove extends AbstractLastMove {
 			
 		}
 		
-		
-		
-		//TODO A gerer le return
 		return new GetSensor(Sensor1,Sensor2) ;
-
-		//return  Float(Sensor1,Sensor2);
-	}
+		}
 
 
 
