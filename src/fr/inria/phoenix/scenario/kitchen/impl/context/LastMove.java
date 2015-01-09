@@ -56,7 +56,8 @@ public class LastMove extends AbstractLastMove {
 				
 			}
 		}
-		
+		DiaLog.debug("LM : sensor1 > "+ Sensor1);
+		DiaLog.debug("LM : sensor2 > "+ Sensor2);
 		return new GetSensor(Sensor1,Sensor2) ;
 		}
 

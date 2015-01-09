@@ -1,13 +1,5 @@
 package cookermanager;
-import static fr.inria.phoenix.diasuite.framework.mocks.Mock.TIMEOUT;
-import static fr.inria.phoenix.diasuite.framework.mocks.Mock.shutdown;
-import static fr.inria.phoenix.diasuite.framework.mocks.Mock.underTest;
-import static fr.inria.phoenix.diasuite.framework.mocks.Mock.mockCooker;
-import static fr.inria.phoenix.diasuite.framework.mocks.Mock.mockContactSensor;
-import static fr.inria.phoenix.diasuite.framework.mocks.Mock.mockContactSensor;
-import static fr.inria.phoenix.diasuite.framework.mocks.Mock.mockElectricMeter;
-import static fr.inria.phoenix.diasuite.framework.mocks.Mock.mockMotionDetector;
-
+import static fr.inria.phoenix.diasuite.framework.mocks.Mock.*;
 import static org.junit.Assert.assertTrue;
 
 import java.sql.Timestamp;
@@ -24,6 +16,7 @@ import fr.inria.phoenix.diasuite.framework.mocks.ContactSensorMock;
 import fr.inria.phoenix.diasuite.framework.mocks.CookerMock;
 import fr.inria.phoenix.diasuite.framework.mocks.ElectricMeterMock;
 import fr.inria.phoenix.diasuite.framework.mocks.MotionDetectorMock;
+import fr.inria.phoenix.diasuite.framework.mocks.TimerMock;
 import fr.inria.phoenix.scenario.kitchen.impl.context.ComponentBinder;
 
 
@@ -38,17 +31,18 @@ public class TestCase {
 	private MotionDetectorMock md2;
 	private ContactSensorMock cs;
 	private ElectricMeterMock em;
+	private TimerMock tm;
 	
 	@Before
 	public void setup() throws Exception {
 		TIMEOUT = 1000;
 		underTest(ComponentBinder.class);
 	}
-//	
-//	@After
-//	public void tearDown() throws Exception {
-//		shutdown();
-//	}
+	
+	@After
+	public void tearDown() throws Exception {
+		shutdown();
+	}
 	
 	@Test
 	public void testOff() {
@@ -56,15 +50,19 @@ public class TestCase {
 		cooker = mockCooker("1", "kitchen", new Company("company"));
 		md1 = mockMotionDetector("1", "location", new Company("company"));
 		md2 = mockMotionDetector("2", "location", new Company("company"));
-//		cs = mockContactSensor("1", "location", new Company("company"));
+		cs = mockContactSensor("1", "location", new Company("company"));
 		em = mockElectricMeter("1", "location", new Company("company"));
+		tm = mockTimer("1");
 		
 		em.setCurrentElectricConsumption(5f);
 		cooker.state(new State("ON", "4546464564"));
-//		cooker.setStatus(OnOffStatus.OFF);
 		
-		md2.setMotion(true);
-		md1.motion(true);
+		md2.setMotion(false);
+		md1.motion(false);
+		
+		cs.state(new State("ON","45654564546"));
+		
+		tm.timerTriggered("0", "1");
 	
 		assertTrue(cooker.expectOff());
 		
