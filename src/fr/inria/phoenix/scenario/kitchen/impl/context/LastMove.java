@@ -30,35 +30,32 @@ public class LastMove extends AbstractLastMove {
 
 		
 		for(MotionDetectorProxyForMotionFromMotionDetector sensor : composite){
-			System.out.println("VAL CAPTEUR"+sensor.getMotion());
+			DiaLog.info("GetSensor : val capteur = "+sensor.getMotion() +" | id= " + sensor.id());
 			if(Integer.parseInt(sensor.id()) == 1){
 				if (sensor.getMotion()) {
 					Sensor1 = 0f;
 					DiaLog.info("Mouvement(Sensor1) detecté");
-					System.out.println("Mouvement(Sensor1) detecté");
+//					System.out.println("Mouvement(Sensor1) detecté");
 
 				} else {
 					Sensor1 += 1;
 					DiaLog.info("Mouvement(Sensor1) non detecté depuis " + Sensor1);
-					System.out.println("Mouvement(Sensor1) non detecté" + Sensor1);
+//					System.out.println("Mouvement(Sensor1) non detecté" + Sensor1);
 				}
 			} else {
 				if (sensor.getMotion()) {
 					Sensor2 = 0f;
 					DiaLog.info("Mouvement(Sensor2) detecté");
-					System.out.println("Mouvement(Sensor2) detecté");
+//					System.out.println("Mouvement(Sensor2) detecté");
 
 				} else {
 					Sensor2 += 1;
 					DiaLog.info("Mouvement(Sensor2) non detecté depuis " + Sensor2);
-					System.out.println("Mouvement(Sensor2) non detecté" + Sensor2);
+//					System.out.println("Mouvement(Sensor2) non detecté" + Sensor2);
 				}
 				
 			}
-				
-			
 		}
-		DiaLog.info("LM : BEFORE RETURN");
 		
 		return new GetSensor(Sensor1,Sensor2) ;
 		}

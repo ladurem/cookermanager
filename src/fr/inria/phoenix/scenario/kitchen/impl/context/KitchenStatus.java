@@ -4,11 +4,8 @@ import fr.inria.diagen.core.ServiceConfiguration;
 import fr.inria.diagen.log.DiaLog;
 import fr.inria.phoenix.diasuite.framework.context.cookerstatus.CookerStatusValue;
 import fr.inria.phoenix.diasuite.framework.context.kitchenstatus.AbstractKitchenStatus;
-import fr.inria.phoenix.diasuite.framework.context.lastmove.LastMoveValue;
 import fr.inria.phoenix.diasuite.framework.datatype.kitchenstate.KitchenState;
 import fr.inria.phoenix.diasuite.framework.device.timer.TimerTriggeredFromTimer;
-import fr.inria.phoenix.scenario.kitchen.impl.context.Config;
-import fr.inria.phoenix.scenario.kitchen.impl.context.KitchenTimer;
 
 public class KitchenStatus extends AbstractKitchenStatus{
 
@@ -21,6 +18,7 @@ public class KitchenStatus extends AbstractKitchenStatus{
 	protected KitchenStatusValuePublishable onTimerTriggeredFromTimer(
 			TimerTriggeredFromTimer timerTriggeredFromTimer,
 			DiscoverForTimerTriggeredFromTimer discover) {
+		
 		DiaLog.debug("KitchenStatusValuePublishable");
 		
 		//VERIFICATION PERIODIQUE
@@ -68,8 +66,8 @@ public class KitchenStatus extends AbstractKitchenStatus{
 		}
 		
 		
-		System.out.println("#DEBUG: SENSOR1"+LastMoveSensor1+" SENSOR2:"+LastMoveSensor2+" DOORSTATUS:"+IsDoorOpen+" COOKERSTATUS"+IsCookerSwitchOn);
-		return new KitchenStatusValuePublishable(KitchenState.RUNTIMER, true);
+		DiaLog.debug("#DEBUG: SENSOR1"+LastMoveSensor1+" SENSOR2:"+LastMoveSensor2+" DOORSTATUS:"+IsDoorOpen+" COOKERSTATUS"+IsCookerSwitchOn);
+		return new KitchenStatusValuePublishable(KitchenState.OK, true);
 	}
 
 	@Override
@@ -78,11 +76,9 @@ public class KitchenStatus extends AbstractKitchenStatus{
 			DiscoverForCookerStatus discover) {
 		// PREMIER LANCEMENT :
 		// FONCTINNEMENT NORMAL ET LANCEMENT DU TIMER
-		System.out.println("KITCHEN STATUS VP 2");
+		DiaLog.debug("Kitchen status : Timer à lancer");
 		
-		
-		
-		return new KitchenStatusValuePublishable(KitchenState.OK, true);
+		return new KitchenStatusValuePublishable(KitchenState.RUNTIMER, true);
 	}
 
 
