@@ -43,11 +43,6 @@ public class KitchenController extends AbstractKitchenController {
 		return;
 		
 //
-//		// Extinction de la gaziniere
-//		discover.cookers().all().off();
-//		// Envoi d'une notification
-//		discover.messengers().all().sendMessage(null, "Titre", "Message", null);
-//
 //
 	}
 }

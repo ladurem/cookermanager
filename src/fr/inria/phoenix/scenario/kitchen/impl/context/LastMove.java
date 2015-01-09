@@ -26,9 +26,7 @@ public class LastMove extends AbstractLastMove {
 
 		//Récuperation des autres capteurs
 		MotionDetectorCompositeForMotionFromMotionDetector composite = discover.motionDetectors().whereLocation(motionSensorLocation);
-		
-
-		
+	
 		for(MotionDetectorProxyForMotionFromMotionDetector sensor : composite){
 			DiaLog.info("GetSensor : val capteur = "+sensor.getMotion() +" | id= " + sensor.id());
 			if(Integer.parseInt(sensor.id()) == 1){
@@ -58,9 +56,7 @@ public class LastMove extends AbstractLastMove {
 		}
 		DiaLog.debug("LM : sensor1 > "+ Sensor1);
 		DiaLog.debug("LM : sensor2 > "+ Sensor2);
-		return new GetSensor(Sensor1,Sensor2) ;
-		}
-
-
-
+		
+		return new GetSensor(Sensor1,Sensor2);
+	}
 }

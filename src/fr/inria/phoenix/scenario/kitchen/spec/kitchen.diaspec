@@ -11,7 +11,7 @@ controller KitchenController{
 
 context KitchenStatus as KitchenState {
 	when provided CookerStatus
-	get timerTriggered from Timer, LastMove,CookerStatus, state from ContactSensor 
+	get CookerStatus 
 	maybe publish;
 	
 	

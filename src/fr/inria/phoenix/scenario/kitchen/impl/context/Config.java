@@ -10,5 +10,7 @@ public class Config {
 	public static int timer_user = -1;
 	
 	public static KitchenTimer kitchenTimer = null;
+	
+	public static boolean notified = false;
 
 }

@@ -45,7 +45,7 @@ public class TestCase {
 	}
 	
 	@Test
-	public void testOff() {
+	public void dansCuisine() {
 		
 		cooker = mockCooker("1", "kitchen", new Company("company"));
 		md1 = mockMotionDetector("1", "location", new Company("company"));
@@ -58,12 +58,12 @@ public class TestCase {
 		cooker.state(new State("ON", "4546464564"));
 		
 		md2.setMotion(false);
-		md1.motion(false);
+		md1.setMotion(true);
 		
-		cs.state(new State("ON","45654564546"));
+		cs.state(new State("OFF","45654564546"));
 		
-		tm.timerTriggered("0", "1");
-	
+//		tm.timerTriggered("0", "1");
+		
 		assertTrue(cooker.expectOff());
 		
 //		temperatureSensor = mockTemperatureSensor("TemperatureSensor", "A29", new Company("Tester"));

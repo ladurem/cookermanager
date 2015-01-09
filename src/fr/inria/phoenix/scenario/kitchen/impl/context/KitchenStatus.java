@@ -79,11 +79,11 @@ public class KitchenStatus extends AbstractKitchenStatus{
 		// PREMIER LANCEMENT :
 		// FONCTINNEMENT NORMAL ET LANCEMENT DU TIMER
 		DiaLog.debug("Kitchen status : Timer à lancer");
-		
+
 		return new KitchenStatusValuePublishable(KitchenState.RUNTIMER, true);
 	}
 
-
+	
 	
 	
 

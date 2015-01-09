@@ -41,7 +41,7 @@ public class CookerStatus extends AbstractCookerStatus {
 		} else {
 //			System.out.println("Probleme de CoockerStatus.java / Aucune condition");
 			DiaLog.warning("Probleme de CoockerStatus.java / Aucune condition");
-			return null;
+			return false;
 		}
 	}
 
