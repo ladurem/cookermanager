@@ -26,13 +26,16 @@ structure GetSensor{
 	sensor2 as Float;
 }
 context LastMove as GetSensor {
-	when provided motion from MotionDetector get motion from MotionDetector always publish;
+	
+	when provided motion from MotionDetector get motion from MotionDetector maybe publish;
+	
 }
 context CookerStatus as Boolean{
 	when provided state from Cooker
 	get state from Cooker,
 	currentElectricConsumption from ElectricMeter
-	always publish;
+	maybe publish;
+	
 }
 
 enumeration KitchenState {

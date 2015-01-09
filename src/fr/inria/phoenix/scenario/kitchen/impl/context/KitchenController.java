@@ -20,7 +20,6 @@ public class KitchenController extends AbstractKitchenController {
 		if (kitchenStatus.value().toString().equals("OK")) {
 			DiaLog.debug("KitchenStatus = OK");
 //			System.out.println("KitchenStatus = OK");
-
 		}
 		if (kitchenStatus.value().toString().equals("WARN")) {
 			DiaLog.debug("KitchenStatus = WARN");
@@ -31,14 +30,13 @@ public class KitchenController extends AbstractKitchenController {
 			DiaLog.debug("KitchenStatus = STOP");
 //			System.out.println("KitchenStatus = STOP");
 			discover.cookers().all().off();
-
 		}
 		if (kitchenStatus.value().toString().equals("RUNTIMER")) {
 			DiaLog.debug("KitchenStatus = PREMIER TOP");
 //			System.out.println("KitchenStatus = PREMIER TOP");
 			discover.timers().all().periodicSchedule("1", 1000, 1000);
 		}
-		DiaLog.debug("FIn du controlleur");
+		DiaLog.debug("Fin du controlleur");
 //		System.out.println("Fin du controlleur");
 		return;
 		

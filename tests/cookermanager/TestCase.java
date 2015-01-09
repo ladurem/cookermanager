@@ -8,6 +8,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import fr.inria.diagen.log.DiaLog;
 import fr.inria.phoenix.diasuite.framework.datatype.company.Company;
 import fr.inria.phoenix.diasuite.framework.datatype.contact.Contact;
 import fr.inria.phoenix.diasuite.framework.datatype.onoffstatus.OnOffStatus;
@@ -45,8 +46,8 @@ public class TestCase {
 	}
 	
 	@Test
-	public void dansCuisine() {
-		
+	public void periodicScheduleStarted() {
+		DiaLog.info("====== periodicScheduleStarted() ======");
 		cooker = mockCooker("1", "kitchen", new Company("company"));
 		md1 = mockMotionDetector("1", "location", new Company("company"));
 		md2 = mockMotionDetector("2", "location", new Company("company"));
@@ -63,8 +64,8 @@ public class TestCase {
 		cs.state(new State("OFF","45654564546"));
 		
 //		tm.timerTriggered("0", "1");
-		
-		assertTrue(cooker.expectOff());
+		assertTrue(tm.expectPeriodicSchedule("1"));
+//		assertTrue(cooker.expectOff());
 		
 //		temperatureSensor = mockTemperatureSensor("TemperatureSensor", "A29", new Company("Tester"));
 //		controlPanel = mockControlPanel("ControlPanel", "A29", new Company("Tester"));
@@ -76,5 +77,41 @@ public class TestCase {
 //		
 //		assertTrue(hvacSystem.expectWarmUp());
 	}
+	
+	@Test
+	public void devantCuisiniere() {
+		DiaLog.info("====== devantCuisiniere() ======");
+		cooker = mockCooker("1", "kitchen", new Company("company"));
+		md1 = mockMotionDetector("1", "location", new Company("company"));
+		md2 = mockMotionDetector("2", "location", new Company("company"));
+		cs = mockContactSensor("1", "location", new Company("company"));
+		em = mockElectricMeter("1", "location", new Company("company"));
+		tm = mockTimer("1");
+		
+		em.setCurrentElectricConsumption(5f);
+		cooker.state(new State("ON", "4546464564"));
+		
+		md2.setMotion(true);
+		md1.setMotion(true);
+		
+		cs.setState(new State("OFF","45654564546"));
+		cooker.setState(new State("ON", "4546464564"));
+		
+		tm.timerTriggered("0", "1");
+		
+		assertTrue(tm.expectPeriodicSchedule("1"));
+//		assertTrue(cooker.expectOff());
+		
+//		temperatureSensor = mockTemperatureSensor("TemperatureSensor", "A29", new Company("Tester"));
+//		controlPanel = mockControlPanel("ControlPanel", "A29", new Company("Tester"));
+//		hvacSystem = mockHVACSystem("HAVCSystem", "A29", new Company("Tester"));
+//		
+//		controlPanel.setTargetTemperature(15.0f);
+//		hvacSystem.setStatus(HVACStatus.STOPPED);
+//		temperatureSensor.temperature(10.0f, TemperatureUnit.CELSIUS);
+//		
+//		assertTrue(hvacSystem.expectWarmUp());
+	}
+	
 	
 }

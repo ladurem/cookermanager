@@ -5,6 +5,7 @@ import fr.inria.diagen.log.DiaLog;
 import fr.inria.phoenix.diasuite.framework.context.lastmove.AbstractLastMove;
 import fr.inria.phoenix.diasuite.framework.datatype.getsensor.GetSensor;
 import fr.inria.phoenix.diasuite.framework.device.motiondetector.MotionFromMotionDetector;
+import fr.inria.phoenix.diasuite.framework.device.timer.TimerTriggeredFromTimer;
 
 public class LastMove extends AbstractLastMove {
 
@@ -13,21 +14,30 @@ public class LastMove extends AbstractLastMove {
 	}
 	Float Sensor1 = 0f;
 	Float Sensor2 = 0f;
-
 	@Override
-	protected GetSensor onMotionFromMotionDetector(
+	protected LastMoveValuePublishable onMotionFromMotionDetector(
 			MotionFromMotionDetector motionFromMotionDetector,
 			DiscoverForMotionFromMotionDetector discover) {
 		
 		DiaLog.info("GetSensor");
 
+//		//Recuperation de la position du capteur
+//		String motionSensorLocation = discover.motionDetectors().all().anyOne().location();
+//
+//		//Récuperation des autres capteurs
+//		 MotionDetectorCompositeForTimerTriggeredFromTimer composite = discover.motionDetectors().whereLocation(motionSensorLocation);
+//	
+//		for(MotionDetectorProxyForTimerTriggeredFromTimer sensor : composite){
+		
 		//Recuperation de la position du capteur
-		String motionSensorLocation = motionFromMotionDetector.sender().location();
+		String motionSensorLocation = discover.motionDetectors().all().anyOne().location();
 
 		//Récuperation des autres capteurs
-		MotionDetectorCompositeForMotionFromMotionDetector composite = discover.motionDetectors().whereLocation(motionSensorLocation);
+		 MotionDetectorCompositeForMotionFromMotionDetector composite = discover.motionDetectors().whereLocation(motionSensorLocation);
 	
 		for(MotionDetectorProxyForMotionFromMotionDetector sensor : composite){
+		
+		
 			DiaLog.info("GetSensor : val capteur = "+sensor.getMotion() +" | id= " + sensor.id());
 			if(Integer.parseInt(sensor.id()) == 1){
 				if (sensor.getMotion()) {
@@ -57,6 +67,10 @@ public class LastMove extends AbstractLastMove {
 		DiaLog.debug("LM : sensor1 > "+ Sensor1);
 		DiaLog.debug("LM : sensor2 > "+ Sensor2);
 		
-		return new GetSensor(Sensor1,Sensor2);
+		return new LastMoveValuePublishable(new GetSensor(Sensor1,Sensor2), true);
+		
 	}
+	
+	
+
 }

@@ -25,13 +25,14 @@ public class KitchenStatus extends AbstractKitchenStatus{
 		
 		Float LastMoveSensor1 = discover.lastMove().getSensor1().floatValue();
 		Float LastMoveSensor2 = discover.lastMove().getSensor2().floatValue();
+		
 		String IsDoorOpen = discover.contactSensors().anyOne().getState().getState();
 		boolean IsCookerSwitchOn = discover.cookerStatus().booleanValue();
 		String TimerTrigger = timerTriggeredFromTimer.value();
 		
 		//TODO A configurer en fonction des temps d'alertes
 		DiaLog.debug("Timer value : "+ TimerTrigger);
-		DiaLog.debug("#DEBUG: SENSOR1 >"+LastMoveSensor1+" SENSOR2: >"+LastMoveSensor2+" DOORSTATUS:"+IsDoorOpen+" COOKERSTATUS"+IsCookerSwitchOn);
+		DiaLog.debug("#DEBUG: SENSOR1 >"+LastMoveSensor1+" SENSOR2: >"+LastMoveSensor2+" DOORSTATUS: "+IsDoorOpen+" COOKERSTATUS: "+IsCookerSwitchOn);
 	
 		// Cuisinière allumée
 		if(!TimerTrigger.isEmpty()){
