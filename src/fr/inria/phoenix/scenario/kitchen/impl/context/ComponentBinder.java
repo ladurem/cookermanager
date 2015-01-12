@@ -2,7 +2,6 @@ package fr.inria.phoenix.scenario.kitchen.impl.context;
 
 import fr.inria.phoenix.diasuite.framework.context.cookerstatus.AbstractCookerStatus;
 import fr.inria.phoenix.diasuite.framework.context.kitchenstatus.AbstractKitchenStatus;
-import fr.inria.phoenix.diasuite.framework.context.kitchenstatus.KitchenStatusValue;
 import fr.inria.phoenix.diasuite.framework.context.lastmove.AbstractLastMove;
 import fr.inria.phoenix.diasuite.framework.controller.kitchencontroller.AbstractKitchenController;
 import fr.inria.phoenix.diasuite.framework.misc.AppComponentBinder;

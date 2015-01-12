@@ -5,7 +5,6 @@ import fr.inria.diagen.log.DiaLog;
 import fr.inria.phoenix.diasuite.framework.context.lastmove.AbstractLastMove;
 import fr.inria.phoenix.diasuite.framework.datatype.getsensor.GetSensor;
 import fr.inria.phoenix.diasuite.framework.device.motiondetector.MotionFromMotionDetector;
-import fr.inria.phoenix.diasuite.framework.device.timer.TimerTriggeredFromTimer;
 
 public class LastMove extends AbstractLastMove {
 

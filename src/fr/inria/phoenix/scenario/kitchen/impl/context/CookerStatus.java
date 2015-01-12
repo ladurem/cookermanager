@@ -3,8 +3,7 @@ package fr.inria.phoenix.scenario.kitchen.impl.context;
 import fr.inria.diagen.core.ServiceConfiguration;
 import fr.inria.diagen.log.DiaLog;
 import fr.inria.phoenix.diasuite.framework.context.cookerstatus.AbstractCookerStatus;
-import fr.inria.phoenix.diasuite.framework.device.cooker.StateFromCooker;
-import fr.inria.phoenix.diasuite.framework.device.timer.TimerTriggeredFromTimer;
+import fr.inria.phoenix.diasuite.framework.device.cooker.StatusFromCooker;
 
 public class CookerStatus extends AbstractCookerStatus {
 
@@ -13,13 +12,13 @@ public class CookerStatus extends AbstractCookerStatus {
 	}
 
 	@Override
-	protected CookerStatusValuePublishable onStateFromCooker(StateFromCooker stateFromCooker,
-			DiscoverForStateFromCooker discover) {
-		
+	protected CookerStatusValuePublishable onStatusFromCooker(
+			StatusFromCooker statusFromCooker,
+			DiscoverForStatusFromCooker discover) {
 		DiaLog.info("Cooker Status : onStateFromCooker");
 //		System.out.println("Cooker Status : onStateFromCooker");
 		
-		String CookerState = discover.cookers().anyOne().getState().getState();
+		String CookerState = discover.cookers().anyOne().getStatus().toString();
 		Float ElectricConsumption = discover.electricMeters().anyOne().getCurrentElectricConsumption();
 		
 		DiaLog.info("CS : " + CookerState);
@@ -44,7 +43,7 @@ public class CookerStatus extends AbstractCookerStatus {
 //			System.out.println("Probleme de CoockerStatus.java / Aucune condition");
 			DiaLog.warning("Probleme de CoockerStatus.java / Aucune condition");
 			return new CookerStatusValuePublishable(false, true);
-		}
 	}
 
+}
 }

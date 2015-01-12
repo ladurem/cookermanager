@@ -1,18 +1,20 @@
 package cookermanager;
-import static fr.inria.phoenix.diasuite.framework.mocks.Mock.*;
+import static fr.inria.phoenix.diasuite.framework.mocks.Mock.TIMEOUT;
+import static fr.inria.phoenix.diasuite.framework.mocks.Mock.mockContactSensor;
+import static fr.inria.phoenix.diasuite.framework.mocks.Mock.mockCooker;
+import static fr.inria.phoenix.diasuite.framework.mocks.Mock.mockElectricMeter;
+import static fr.inria.phoenix.diasuite.framework.mocks.Mock.mockMotionDetector;
+import static fr.inria.phoenix.diasuite.framework.mocks.Mock.mockTimer;
+import static fr.inria.phoenix.diasuite.framework.mocks.Mock.shutdown;
+import static fr.inria.phoenix.diasuite.framework.mocks.Mock.underTest;
 import static org.junit.Assert.assertTrue;
-
-import java.sql.Timestamp;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import fr.inria.diagen.log.DiaLog;
-import fr.inria.phoenix.diasuite.framework.datatype.company.Company;
-import fr.inria.phoenix.diasuite.framework.datatype.contact.Contact;
 import fr.inria.phoenix.diasuite.framework.datatype.onoffstatus.OnOffStatus;
-import fr.inria.phoenix.diasuite.framework.datatype.state.State;
 import fr.inria.phoenix.diasuite.framework.mocks.ContactSensorMock;
 import fr.inria.phoenix.diasuite.framework.mocks.CookerMock;
 import fr.inria.phoenix.diasuite.framework.mocks.ElectricMeterMock;
@@ -48,20 +50,20 @@ public class TestCase {
 	@Test
 	public void periodicScheduleStarted() {
 		DiaLog.info("====== periodicScheduleStarted() ======");
-		cooker = mockCooker("1", "kitchen", new Company("company"));
-		md1 = mockMotionDetector("1", "location", new Company("company"));
-		md2 = mockMotionDetector("2", "location", new Company("company"));
-		cs = mockContactSensor("1", "location", new Company("company"));
-		em = mockElectricMeter("1", "location", new Company("company"));
+		cooker = mockCooker("1", "kitchen", ("company"));
+		md1 = mockMotionDetector("1", "location", ("company"));
+		md2 = mockMotionDetector("2", "location", ("company"));
+		cs = mockContactSensor("1", "location", ("company"));
+		em = mockElectricMeter("1", "location", ("company"));
 		tm = mockTimer("1");
 		
 		em.setCurrentElectricConsumption(5f);
-		cooker.state(new State("ON", "4546464564"));
+		cooker.status(OnOffStatus.ON);
 		
 		md2.setMotion(false);
 		md1.setMotion(true);
 		
-		cs.state(new State("OFF","45654564546"));
+		cs.state(true);
 		
 //		tm.timerTriggered("0", "1");
 		assertTrue(tm.expectPeriodicSchedule("1"));
@@ -81,21 +83,21 @@ public class TestCase {
 	@Test
 	public void devantCuisiniere() {
 		DiaLog.info("====== devantCuisiniere() ======");
-		cooker = mockCooker("1", "kitchen", new Company("company"));
-		md1 = mockMotionDetector("1", "location", new Company("company"));
-		md2 = mockMotionDetector("2", "location", new Company("company"));
-		cs = mockContactSensor("1", "location", new Company("company"));
-		em = mockElectricMeter("1", "location", new Company("company"));
+		cooker = mockCooker("1", "kitchen", ("company"));
+		md1 = mockMotionDetector("1", "location", ("company"));
+		md2 = mockMotionDetector("2", "location", ("company"));
+		cs = mockContactSensor("1", "location", ("company"));
+		em = mockElectricMeter("1", "location", ("company"));
 		tm = mockTimer("1");
 		
 		em.setCurrentElectricConsumption(5f);
-		cooker.state(new State("ON", "4546464564"));
+		cooker.status(OnOffStatus.ON);
 		
 		md2.setMotion(true);
 		md1.setMotion(true);
 		
-		cs.setState(new State("OFF","45654564546"));
-		cooker.setState(new State("ON", "4546464564"));
+		cs.setState(true);
+		cooker.setStatus(OnOffStatus.ON);
 		
 		tm.timerTriggered("0", "1");
 		

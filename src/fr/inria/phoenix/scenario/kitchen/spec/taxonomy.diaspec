@@ -2,20 +2,36 @@ enumeration OnOffStatus {
 	ON, OFF
 }
 
+enumeration Priority {
+	LOW, NORMAL, HIGH
+}
+
 enumeration TemperatureUnit {
 	CELSIUS, FAHRENHEIT, KELVIN
+}
+
+enumeration Confidence {
+	STRONG, MEDIUM, WEAK
+}
+
+enumeration CallStatus {
+	IDLE, RINGING, ESTABLISHED
+}
+
+enumeration IMStatus {
+	OFFLINE, IDLE, ONLINE
 }
 
 enumeration NotificationLevel {
 	INFORMATION, WARNING, CRITICAL
 }
 
-enumeration FileType {
-	DIRECTORY, IMAGE, SOUND, RAW_AUDIO, VIDEO, TEXT, OTHER
+enumeration ApplianceType {
+	OVEN, LIGHT, WATER_VALVE, FAN, HEATER
 }
 
-enumeration Priority {
-	LOW, NORMAL, HIGH
+enumeration Modality {
+	VISUAL,AUDITIVE	
 }
 
 structure Contact {
@@ -24,7 +40,7 @@ structure Contact {
 	phone as String;
 	mobile as String;
 	iconUrl as String;
-	groups as String [];
+	groups as String[];
 }
 
 structure Email {
@@ -37,7 +53,7 @@ structure Message {
 	sender as Contact;
 	title as String;
 	text as String;
-	attachments as File [];
+	attachments as File[];
 }
 
 structure Date {
@@ -82,6 +98,27 @@ structure WindInfo {
 	direction as String;
 }
 
+
+structure Channel {
+	name as String;
+	icon as File;
+}
+
+
+
+enumeration MultimediaOrder {
+	PLAY, PAUSE, STOP, NEXT, PREVIOUS, RECORD, VOLUME_UP, VOLUME_DOWN, MUTE, INFO, DIGIT_0, DIGIT_1, DIGIT_2, DIGIT_3,
+	DIGIT_4, DIGIT_5, DIGIT_6, DIGIT_7, DIGIT_8, DIGIT_9
+}
+
+enumeration FileType {
+	DIRECTORY, IMAGE, SOUND, RAW_AUDIO, VIDEO, TEXT, OTHER
+}
+
+enumeration TaskState {TO_DO, COMPLETED}
+
+enumeration DailyActivity {MEALS, DRESSING, BATH, WAKEUP, SLEEP}
+
 structure FileInfo {
 	name as String;
 	type as FileType;
@@ -93,12 +130,42 @@ structure File {
 	content as Binary;
 }
 
+structure MissedCall {
+	caller as String;
+	date as String;
+}
+
+structure Call {
+	status as CallStatus;
+	caller as String;
+}
+
+structure TvSchedule {
+	title as String;
+	description as String;
+	genre as String;
+	startTime as Date;
+	endTime as Date;
+	channel as String;
+}
+
+structure Task {
+	id as String;
+	content as String;
+	state as TaskState;
+}
+
 action On {
 	on();
 }
 
 action Off {
 	off();
+}
+
+action StartStopRecording {
+	startRecording();
+	stopRecording();
 }
 
 action VariationControl {
@@ -135,9 +202,53 @@ action SendTargetedEmail {
 	send(message as Email, address as String);
 }
 
+action VolumeControl {
+	mute(mute as Boolean);
+	volumeUp();
+	volumeDown();
+	setVolume(level as Float);
+}
+
+action TimeControl {
+	play();
+	pause();
+	stop();
+}
+
+action PlaySound {
+	play(sound as File);
+}
+
+action StoragePutAction {
+	put(file as File);
+}
+
+action StorageDeleteAction {
+	delete(file as FileInfo);
+}
+
+action ChannelControl {
+	changeChannel(channel as String);
+	nextChannel();
+	previousChannel();
+}
+
 action PushMessage {
 	push(title as String, text as String, priority as Priority);
 	pushWithImage(title as String, text as String, priority as Priority, image as File);
+}
+
+action PTZ {
+	pan(angle as Float);
+	panLeft();
+	panRight();
+	tilt(angle as Float);
+	tiltUp();
+	tiltDown();
+	zoom(factor as Float);
+	zoomIn();
+	zoomOut();
+	goToPreset(presetName as String);
 }
 
 action UnLock {
@@ -164,26 +275,53 @@ action UpdateLockStatus {
 	updateStatus(isLocked as Boolean);
 }
 
+action TelephonyGatewayConfiguration {
+	setRedirectionNumberOut(number as String);
+	setRedirectionNumberIn(number as String);
+}
+
+action TvRecording {
+	record(name as String, channel as String, startDate as Date, endDate as Date);
+}
+
+action PhotoFrameManagement {
+	setCurrentPhoto(photo as File);
+	addPhoto(photo as File);
+	removePhoto(photo as File);
+	removeAllPhoto();
+}
+
+action ADBStatus {
+	changeStatus(appliance as ApplianceType, status as Boolean);
+}
+
+action Update {
+	update(newActivity as DailyActivity);
+}
+
 device Device {
 	attribute id as String;
 	source isAlive as Boolean;
 }
 
-device Cooker extends Appliance {
-	source state as State;
-}
-
-structure State {
-	state as String;
-	timestamp as String;
-}
 
 //-------------------------
-//-- Services
+//-- SERVICES
 //-------------------------
-device BuiltIn extends Device {
+device Service extends Device {
 }
 
+device HomeService extends Service {
+}
+
+device UserService extends Service {
+	attribute user as String;
+}
+
+device BuiltIn extends Service {
+}
+
+// BUILTIN SERVICES
 device Clock extends BuiltIn {
 	source tickSecond as Integer;
 	source tickMinute as Integer;
@@ -198,43 +336,47 @@ action ScheduleTimer {
 
 device Timer extends BuiltIn {
 	source timerTriggered as String indexed by timerId as String;
-	action ScheduleTimer;
+	action ScheduleTimer;	
 }
 
-structure KeyValue {
-	key as String;
-	value as String;
-}
+// USER SERVICES
 
-action ManageData {
-	put(data as KeyValue);
-	delete(key as String);
-}
-
-device Database extends BuiltIn {
-	source value as String indexed by key as String;
-	source values as KeyValue [] indexed by keys as String [];
-	action ManageData;
-}
-
-device WeatherForecaster extends Device {
-	source currentWeather as Weather indexed by region as String;
-	source weatherForecasts as WeatherForecast [] indexed by region as String;
-}
-
-// Communication Services
 action SendMessage {
-	sendMessage(to as Contact, title as String, content as String, attachments as File []);
-	sendMessageWithImage(to as Contact, title as String, content as String, image as String);
+	sendMessage(to as Contact, title as String, content as String, attachments as File[]);
+	sendMessageWithImage(to as Contact, title as String, content as String, image as String);	
 }
 
-device NotificationService extends Device {
+action SendTrustedMessage {
+	sendTrustedMessage(to as Contact, title as String, content as String );	
+	sendTrustedMessageWithImage(to as Contact, title as String, content as String, image as String);	
+}
+
+action AskQuestion {
+	askCloseQuestion(to as Contact, questionId as String, title as String, content as String, possibleAnswers as String[]);	
+	askCloseQuestionWithImage(to as Contact, questionId as String, title as String, content as String, possibleAnswers as String[], image as String);	
+	askOpenQuestion(to as Contact, questionId as String, title as String, content as String);	
+	askOpenQuestionWithImage(to as Contact, questionId as String, title as String, content as String, image as String);	
+}
+
+action AskTrustedQuestion {
+	askCloseTrustedQuestion(to as Contact, questionId as String, title as String, content as String, possibleAnswers as String[]);	
+	askCloseTrustedQuestionWithImage(to as Contact, questionId as String, title as String, content as String, possibleAnswers as String[], image as String);	
+	askOpenTrustedQuestion(to as Contact, questionId as String, title as String, content as String);	
+	askOpenTrustedQuestionWithImage(to as Contact, questionId as String, title as String, content as String, image as String);	
+}
+
+device CommunicationService extends Service {
 	action SendMessage;
-}
+	action AskQuestion;
+	source questionAnswer as String indexed by questionId as String;
+	source lastMessage as Message;
 
-device CommunicationService extends NotificationService {
-	source lastMessageReceived as Message;
-	source messagesReceived as Message [] indexed by from as Contact, since as Date;
+	action SendTrustedMessage; 
+	action AskTrustedQuestion; 
+	source trustedQuestionAnswer as String indexed by questionId as String;
+	source lastTrustedMessage as Message;
+
+	source safeContacts as Contact[];
 }
 
 device Mailer extends CommunicationService {
@@ -243,34 +385,129 @@ device Mailer extends CommunicationService {
 device InstantMessenger extends CommunicationService {
 }
 
-device AddressBook extends Device {
+device SMSSender extends CommunicationService {
+}
+
+device ActivityNotifier extends Service {
+	source activity as DailyActivity;
+	action Update;
+}
+
+device AddressBook extends HomeService {
 	attribute owner as String;
-	source contacts as Contact [] indexed by filter as Contact;
+	source contacts as Contact[] indexed by filter as Contact;
 	action AddressBookAction;
 }
 
-device Agenda extends Device {
+device Agenda extends HomeService {
 	attribute owner as String;
 	source currentEvent as AgendaEvent;
 	source nextEvent as AgendaEvent;
-	source events as AgendaEvent [] indexed by filter as AgendaEvent;
+	source events as AgendaEvent[] indexed by filter as AgendaEvent;
 	action AgendaEventAction;
 }
 
+device WeatherForecaster extends HomeService {
+	source currentWeather as Weather indexed by region as String;
+	source weatherForecasts as WeatherForecast[] indexed by region as String;
+}
+
+device TvGuide extends HomeService {
+	source availableChannels as Channel[];
+	source currentProgram as TvSchedule indexed by channelId as String;
+	source nextProgram as TvSchedule indexed by channelId as String;
+	source programs as TvSchedule[] indexed by filter as TvSchedule;
+}
+
+// Telephony 
+device TelephonyGateway extends HomeService {
+	action TelephonyGatewayConfiguration;
+	source redirectionNumberOut as String;
+	source redirectionNumberIn as String;
+	source currentCall as Call;
+	source missedCalls as MissedCall[];
+	source lastMissedCall as MissedCall;
+}
+
+action AddTask {
+	addTask(task as Task);
+}
+
+action DeleteTask {
+	deleteTask(task as Task);
+}
+
+action UpdateTaskState {
+	update(taskId as String, state as TaskState);
+}
+
+device TaskManager extends HomeService {
+	source tasks as Task[];
+	action AddTask;
+	action DeleteTask;
+	action UpdateTaskState;
+}
+
 //-------------------------
-//-- Physical Devices
+//-- DEVICES
 //-------------------------
+
 device PhysicalDevice extends Device {
 	attribute location as String;
-	attribute company as Company;
+	attribute user as String;
 }
 
+
+//------------------
+// Cameras
+//------------------------------------
+
+device Camera extends PhysicalDevice {
+	source image as File;
+}
+
+device VideoCamera extends Camera {
+	action StartStopRecording;
+	source video as File;
+}
+
+device PTZVideoCamera extends VideoCamera {
+	action PTZ;
+	source panAngle as Float;
+	source tiltAngle as Float;
+	source zoom as Float;
+}
+
+device Microphone extends PhysicalDevice {
+	action StartStopRecording;
+	source sound as File;
+}
+
+device Speaker extends PhysicalDevice {
+	action PlaySound;
+}
+
+
+//------------------
 // Sensors
-device Sensor extends PhysicalDevice {
+//------------------------------------
+
+device Button extends PhysicalDevice {
+	source pushed as Boolean;
 }
 
-device ContactSensor extends Sensor {
-	source state as State;
+device Notifier extends PhysicalDevice {
+	action Notification;	
+}
+
+device VisualNotifier extends Notifier {
+}
+
+device AudioNotifier extends Notifier {
+}
+
+
+device Sensor extends PhysicalDevice {
 }
 
 device MotionDetector extends Sensor {
@@ -285,6 +522,10 @@ device TemperatureSensor extends Sensor {
 	source temperature as Float indexed by unit as TemperatureUnit;
 }
 
+device ContactSensor extends Sensor {
+	source state as Boolean;
+}
+
 device SmokeSensor extends Sensor {
 	source smoke as Boolean;
 }
@@ -297,76 +538,325 @@ device OverflowSensor extends Sensor {
 	source overflow as Boolean;
 }
 
-// Energy
 device EnergyMeter extends Sensor {
 }
 
 device ElectricMeter extends EnergyMeter {
-	source electricConsumption as Float indexed by date as Date;
 	source currentElectricConsumption as Float;
 }
 
 device WaterMeter extends EnergyMeter {
-	source waterConsumption as Float indexed by date as Date;
 	source currentWaterConsumption as Float;
 }
 
 device GasMeter extends EnergyMeter {
-	source gasConsumption as Float indexed by date as Date;
 	source currentGasConsumption as Float;
 }
 
+
 //------------------
-// MESSENGERS
-//------------------------------------
-device Messenger extends PhysicalDevice {
-	action SendMessage;
-	//attribute modality as Modality;
-
-}
-
 // Appliances
+//------------------------------------
+
 device Appliance extends PhysicalDevice {
 	action On;
 	action Off;
 	source status as OnOffStatus;
 }
 
+device Light extends Appliance {
+}
+
+device DimmableLight extends Light {
+	action VariationControl;
+	source level as Float;
+}
+
+device Heater extends Appliance {
+}
+
 device Alarm extends Appliance {
+}
+
+device RepetitiveAlarm extends Alarm {
+	
+}
+
+device ModAlarm extends Alarm {
+	attribute modality as Modality;
+}
+
+device Fan extends Appliance {
+}
+
+device Cooker extends Appliance {
+}
+
+device Thermostat extends Appliance {
+	action SetTemperature;
+	source targetTemperature as Temperature;
+}
+
+
+
+// MISC
+
+device Shutter extends PhysicalDevice {
+	action Open;
+	action Close;
+	action SetShutterPosition;
+	source position as Float;
+}
+
+device DoorLocker extends PhysicalDevice {
+	action Lock;
+	action UnLock;
+	source locked as Boolean;	
+}
+
+device PhotoFrame extends PhysicalDevice {
+	source photos as File[];
+	action PhotoFrameManagement;
 }
 
 //------------------
 // IHM
 //------------------------------------
-device KeyPad extends PhysicalDevice {
-	action UpdateLockStatus;
-	source isLocked as Boolean;
-}
-
-device IntrusionDetector extends PhysicalDevice {
-	source intrusionDetected as Boolean;
-}
 
 device IHM extends Device {
 }
 
-structure Company {
+device ApplianceDashBoard extends IHM {
+	action ADBStatus;
+}
+
+//------------------
+// Storages
+//------------------------------------
+
+device Storage extends PhysicalDevice {
+	attribute name as String;
+	source file as File indexed by info as FileInfo;
+	source fileBrowsing as FileInfo[] indexed by directory as FileInfo, filter as FileType;
+	action StoragePutAction;
+	action StorageDeleteAction;
+}
+
+device MobileStorage extends Storage {
+}
+
+device NetworkStorage extends Storage {
+}
+
+device LocalStorage extends Storage {
+}
+
+
+//------------------
+// TV
+//------------------------------------
+
+device Tv extends PhysicalDevice {
+	action ChannelControl;
+	action VolumeControl;
+	source currentChannel as String;
+	source currentVolume as Float;
+	source mute as Boolean;
+	source turnedOn as Boolean;
+}
+
+device SmartTv extends Tv {
+	action TimeControl;
+}
+
+device TvRecorder extends PhysicalDevice {
+	action TvRecording;
+	source recordedProgram as File indexed by name as String;
+}
+
+
+device RemoteControl extends PhysicalDevice {
+	source order as MultimediaOrder;	
+}
+
+
+//------------------
+// MESSENGERS
+//------------------------------------
+
+device Messenger extends PhysicalDevice {
+	action SendMessage;
+	//attribute modality as Modality;
+}
+
+device TvMessenger extends Messenger {
+}
+
+device AudioMessenger extends Messenger {
+}
+
+device ScreenMessenger extends Messenger {
+}
+
+
+device Prompter extends PhysicalDevice {
+	action AskQuestion;
+	source answer as String indexed by questionId as String;
+}
+
+device TvPrompter extends Prompter {
+}
+
+device ScreenPrompter extends Prompter {
+}
+
+device AudioPrompter extends Prompter {
+}
+
+
+device Input extends PhysicalDevice {
+	source message as String;
+}
+
+device AudioInput extends Input {
+}
+
+device ScreenInput extends Input {
+}
+
+
+device KeyPad extends PhysicalDevice {
+	action UpdateLockStatus;
+	source isLocked as Boolean;
+} 
+
+device Identifier extends PhysicalDevice {
+	source present as Boolean indexed by id as String;
+}
+
+device BluetoothIdentifier extends Identifier {
+}
+
+device RfidIdentifier extends Identifier {
+}
+
+device FingerPrintIdentifier extends Identifier {
+}
+
+device TextToSpeech extends PhysicalDevice {
+	source textToAudio as File indexed by text as String;
+}
+
+//------------------
+// Healthcare
+//------------------------------------
+enumeration Relationship {
+	ME, FRIEND, FAMILY, CAREGIVER, MEDICAL
+}
+
+enumeration ServiceTabletMode {
+	SHOPPING, PHONE, ALERT
+}
+
+structure PersonalProfile {
+	info as Contact;
+	picture as File;
+	relationship as Relationship;
+}
+
+action PushContacts {
+	pushContacts(profiles as PersonalProfile[]);
+}
+
+device ServiceTablet extends PhysicalDevice {
+	action PushContacts;
+	source tabletMode as ServiceTabletMode;
+	source tabletAction as ServiceTabletMode indexed by profile as PersonalProfile;
+}
+
+device PersonalAddressBook extends UserService {
+	source profiles as PersonalProfile[] indexed by filter as PersonalProfile;
+}
+
+//------------------
+// Photo Management
+//------------------------------------
+
+/*** STRUCTURES ***/
+structure Tag {
 	name as String;
 }
 
-structure Intrusion {
-	company as Company;
-	location as String;
+structure Comment {
+	author as String;
+	text as String;
 	date as Date;
 }
 
-device BuildingSecurityView extends IHM {
-	source securityStatus as Boolean indexed by company as Company;
-	source sendIntrusionAlerts as Boolean indexed by company as Company;
-	source selectedUsers as Contact [] indexed by company as Company;
-	action AddIntrusion;
+structure Photo {
+	albumID as String;
+	uploadedBy as Contact;
+	title as String;
+	content as Binary;
+	description as String;
+	date as Date;
+	reference as String;
 }
 
-action AddIntrusion {
-	addIntrusion(company as Company, intrusion as Intrusion);
+structure PhotoFilter {
+	date as Date;
+	albumID as String;
+	titleString as String;
+	contact as Contact;
+}
+
+structure PhotoAlbum {
+	id as String;
+	name as String;
+	description as String;
+	date as Date;
+	photos as Photo [];
+}
+
+structure PhotoAlbumFilter {
+	date as Date;
+	titleString as String;
+}
+
+/*** ACTIONS ***/
+action AddPhoto {
+	addPhoto(photo as Photo);
+}
+
+action AddPhotoToAlbum {
+	addPhotoToAlbum(photo as Photo, album as PhotoAlbum);
+}
+
+action RemovePhoto {
+	removePhoto(photoID as String);
+	removePhotos(photoIDs as String []);
+	removeAll();
+}
+
+action RemovePhotoFromAlbum {
+	removePhotoFromAlbum(photoID as String, albumID as String);
+	removePhotosFromAlbum(photoIDs as String [], albumID as String);
+	removeAllFromAlbum(albumID as String);
+}
+
+/*** DEVICES ***/
+device PhotoLibrary extends Device {
+	attribute owner as String;
+	source photos as Photo [] indexed by filter as PhotoFilter;
+	source albums as PhotoAlbum [] indexed by filter as PhotoAlbumFilter;
+	action AddPhoto;
+	action AddPhotoToAlbum;
+	action RemovePhoto;
+	action RemovePhotoFromAlbum;
+}
+
+device SocialNetworkPhotoLibrary extends PhotoLibrary {
+	source recentPhotosSharedByContacts as Photo [] indexed by filter as PhotoFilter;
+	source tags as Tag [] indexed by photoID as String;
+	source comments as Comment [] indexed by photoID as String;
 }

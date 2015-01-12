@@ -31,8 +31,8 @@ context LastMove as GetSensor {
 	
 }
 context CookerStatus as Boolean{
-	when provided state from Cooker
-	get state from Cooker,
+	when provided status from Cooker
+	get status from Cooker,
 	currentElectricConsumption from ElectricMeter
 	maybe publish;
 	

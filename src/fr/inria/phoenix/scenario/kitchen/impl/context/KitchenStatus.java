@@ -26,7 +26,7 @@ public class KitchenStatus extends AbstractKitchenStatus{
 		Float LastMoveSensor1 = discover.lastMove().getSensor1().floatValue();
 		Float LastMoveSensor2 = discover.lastMove().getSensor2().floatValue();
 		
-		String IsDoorOpen = discover.contactSensors().anyOne().getState().getState();
+		String IsDoorOpen = discover.contactSensors().anyOne().getState().toString();
 		boolean IsCookerSwitchOn = discover.cookerStatus().booleanValue();
 		String TimerTrigger = timerTriggeredFromTimer.value();
 		
