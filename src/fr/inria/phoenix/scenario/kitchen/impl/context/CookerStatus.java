@@ -3,6 +3,7 @@ package fr.inria.phoenix.scenario.kitchen.impl.context;
 import fr.inria.diagen.core.ServiceConfiguration;
 import fr.inria.diagen.log.DiaLog;
 import fr.inria.phoenix.diasuite.framework.context.cookerstatus.AbstractCookerStatus;
+import fr.inria.phoenix.diasuite.framework.datatype.onoffstatus.OnOffStatus;
 import fr.inria.phoenix.diasuite.framework.device.cooker.StatusFromCooker;
 
 public class CookerStatus extends AbstractCookerStatus {
@@ -12,31 +13,37 @@ public class CookerStatus extends AbstractCookerStatus {
 	}
 
 	@Override
-	protected CookerStatusValuePublishable onStatusFromCooker(
-			StatusFromCooker statusFromCooker,
+	protected CookerStatusValuePublishable onStatusFromCooker(StatusFromCooker statusFromCooker,
 			DiscoverForStatusFromCooker discover) {
 		DiaLog.info("Cooker Status : onStateFromCooker");
 //		System.out.println("Cooker Status : onStateFromCooker");
 		
 		String CookerState = discover.cookers().anyOne().getStatus().toString();
-		Float ElectricConsumption = discover.electricMeters().anyOne().getCurrentElectricConsumption();
-		
+		Float ElectricConsumption = Float.parseFloat(discover.electricMeters().anyOne().getCurrentElectricConsumption().getState());
+	
 		DiaLog.info("CS : " + CookerState);
 		DiaLog.info("EC : " + ElectricConsumption);
 		
-		if (CookerState.equals("On") && ElectricConsumption != 0) {
+		DiaLog.info("OnOff="+OnOffStatus.ON);
+		DiaLog.info("STATE"+CookerState.equals(OnOffStatus.ON));
+		DiaLog.info("STATE"+CookerState.equals("ON"));
+
+		
+		
+		
+		if (CookerState.equals("ON") && ElectricConsumption != 0) {
 			DiaLog.warning("système allumé");	
 			return new CookerStatusValuePublishable(true, true);
 			
-		} else if (CookerState.equals("On") && ElectricConsumption == 0) {
+		} else if (CookerState.equals(OnOffStatus.ON) && ElectricConsumption == 0) {
 //			System.out.println("Smartswich allume mais rien branche");
 			DiaLog.warning("Smartswich allume mais rien branche");
 			return new CookerStatusValuePublishable(false, true);
-		} else if (CookerState.equals("Off") && ElectricConsumption != 0) {
+		} else if (CookerState.equals(OnOffStatus.OFF) && ElectricConsumption != 0) {
 //			System.out.println("Probleme au niveau du smartwitch");
 			DiaLog.warning("Problème au niveau du smartwitch");
 			return new CookerStatusValuePublishable(false, true);
-		} else if (CookerState.equals("Off") && ElectricConsumption == 0) {
+		} else if (CookerState.equals(OnOffStatus.OFF) && ElectricConsumption == 0) {
 			DiaLog.warning("Système éteint");
 			return new CookerStatusValuePublishable(false, true);
 		} else {

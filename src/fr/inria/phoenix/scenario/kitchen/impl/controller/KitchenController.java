@@ -1,4 +1,4 @@
-package fr.inria.phoenix.scenario.kitchen.impl.context;
+package fr.inria.phoenix.scenario.kitchen.impl.controller;
 
 import fr.inria.diagen.core.ServiceConfiguration;
 import fr.inria.diagen.log.DiaLog;

@@ -39,7 +39,7 @@ public class LastMove extends AbstractLastMove {
 		
 			DiaLog.info("GetSensor : val capteur = "+sensor.getMotion() +" | id= " + sensor.id());
 			if(Integer.parseInt(sensor.id()) == 1){
-				if (sensor.getMotion()) {
+				if (Boolean.parseBoolean(sensor.getMotion().getState())) {
 					Sensor1 = 0f;
 					DiaLog.info("Mouvement(Sensor1) detecté");
 //					System.out.println("Mouvement(Sensor1) detecté");
@@ -50,7 +50,7 @@ public class LastMove extends AbstractLastMove {
 //					System.out.println("Mouvement(Sensor1) non detecté" + Sensor1);
 				}
 			} else {
-				if (sensor.getMotion()) {
+				if (Boolean.parseBoolean(sensor.getMotion().getState())) {
 					Sensor2 = 0f;
 					DiaLog.info("Mouvement(Sensor2) detecté");
 //					System.out.println("Mouvement(Sensor2) detecté");

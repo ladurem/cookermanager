@@ -5,6 +5,7 @@ import fr.inria.phoenix.diasuite.framework.context.kitchenstatus.AbstractKitchen
 import fr.inria.phoenix.diasuite.framework.context.lastmove.AbstractLastMove;
 import fr.inria.phoenix.diasuite.framework.controller.kitchencontroller.AbstractKitchenController;
 import fr.inria.phoenix.diasuite.framework.misc.AppComponentBinder;
+import fr.inria.phoenix.scenario.kitchen.impl.controller.KitchenController;
 
 /* (non-Javadoc)
  * The binder to provides the various components of the application

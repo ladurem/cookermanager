@@ -34,6 +34,10 @@ enumeration Modality {
 	VISUAL,AUDITIVE	
 }
 
+structure Timestamp{
+	timestampstr as String;
+}
+
 structure Contact {
 	name as String;
 	emailAddress as String;
@@ -117,7 +121,12 @@ enumeration FileType {
 
 enumeration TaskState {TO_DO, COMPLETED}
 
-enumeration DailyActivity {MEALS, DRESSING, BATH, WAKEUP, SLEEP}
+enumeration EnumActivity {MEALS, DRESSING, BATH, WAKEUP, SLEEP}
+
+structure DailyActivity{
+	dayActivity as String;
+	done as Boolean;
+}
 
 structure FileInfo {
 	name as String;
@@ -302,6 +311,7 @@ action Update {
 device Device {
 	attribute id as String;
 	source isAlive as Boolean;
+	//source eventTime as String;	
 }
 
 
@@ -510,8 +520,27 @@ device AudioNotifier extends Notifier {
 device Sensor extends PhysicalDevice {
 }
 
+structure State{
+	state as String;
+	timestamp as String;
+}
+/* 
+structure ContactSens{
+	state as Boolean;
+	timestamp as String;
+}
+structure State{
+	state as Float;
+	timestamp as String;
+}
+structure ElectricConsumption{
+	currentElectricConsumption as Float;
+	timestamp as String;
+}
+*/
 device MotionDetector extends Sensor {
-	source motion as Boolean;
+	source motion as State;
+	//source timestamp as Timestamp;
 }
 
 device LightSensor extends Sensor {
@@ -523,7 +552,7 @@ device TemperatureSensor extends Sensor {
 }
 
 device ContactSensor extends Sensor {
-	source state as Boolean;
+	source state as State;
 }
 
 device SmokeSensor extends Sensor {
@@ -542,7 +571,7 @@ device EnergyMeter extends Sensor {
 }
 
 device ElectricMeter extends EnergyMeter {
-	source currentElectricConsumption as Float;
+	source currentElectricConsumption as State;
 }
 
 device WaterMeter extends EnergyMeter {
@@ -557,14 +586,19 @@ device GasMeter extends EnergyMeter {
 //------------------
 // Appliances
 //------------------------------------
+structure OnOff{
+	status as String;
+	eventTime as String;
+}
 
 device Appliance extends PhysicalDevice {
 	action On;
 	action Off;
-	source status as OnOffStatus;
+	//source status as OnOff;
 }
 
 device Light extends Appliance {
+	source status as State;
 }
 
 device DimmableLight extends Light {
@@ -573,9 +607,11 @@ device DimmableLight extends Light {
 }
 
 device Heater extends Appliance {
+	source status as OnOff;
 }
 
 device Alarm extends Appliance {
+	//source status as OnOff;
 }
 
 device RepetitiveAlarm extends Alarm {
@@ -590,6 +626,7 @@ device Fan extends Appliance {
 }
 
 device Cooker extends Appliance {
+	source status as State;
 }
 
 device Thermostat extends Appliance {
@@ -860,3 +897,12 @@ device SocialNetworkPhotoLibrary extends PhotoLibrary {
 	source tags as Tag [] indexed by photoID as String;
 	source comments as Comment [] indexed by photoID as String;
 }
+
+device LoggerSecondTab extends PhysicalDevice{
+	source logs as String;
+}
+
+device Battery extends PhysicalDevice{
+	source batteryState as Integer;
+}
+
