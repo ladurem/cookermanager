@@ -25,19 +25,19 @@ public class CookerStatus extends AbstractCookerStatus {
 		DiaLog.info("CS : " + CookerState);
 		DiaLog.info("EC : " + ElectricConsumption);
 		
-		if (CookerState.equals("ON") && ElectricConsumption != 0) {
+		if (CookerState.equals("On") && ElectricConsumption != 0) {
 			DiaLog.warning("système allumé");	
 			return new CookerStatusValuePublishable(true, true);
 			
-		} else if (CookerState.equals("ON") && ElectricConsumption == 0) {
+		} else if (CookerState.equals("On") && ElectricConsumption == 0) {
 //			System.out.println("Smartswich allume mais rien branche");
 			DiaLog.warning("Smartswich allume mais rien branche");
 			return new CookerStatusValuePublishable(false, true);
-		} else if (CookerState.equals("OFF") && ElectricConsumption != 0) {
+		} else if (CookerState.equals("Off") && ElectricConsumption != 0) {
 //			System.out.println("Probleme au niveau du smartwitch");
 			DiaLog.warning("Problème au niveau du smartwitch");
 			return new CookerStatusValuePublishable(false, true);
-		} else if (CookerState.equals("OFF") && ElectricConsumption == 0) {
+		} else if (CookerState.equals("Off") && ElectricConsumption == 0) {
 			DiaLog.warning("Système éteint");
 			return new CookerStatusValuePublishable(false, true);
 		} else {
