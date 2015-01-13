@@ -1,10 +1,13 @@
-package fr.inria.phoenix.scenario.kitchen.impl.context;
+package fr.inria.phoenix.scenario.kitchen.impl;
 
 import fr.inria.phoenix.diasuite.framework.context.cookerstatus.AbstractCookerStatus;
 import fr.inria.phoenix.diasuite.framework.context.kitchenstatus.AbstractKitchenStatus;
 import fr.inria.phoenix.diasuite.framework.context.lastmove.AbstractLastMove;
 import fr.inria.phoenix.diasuite.framework.controller.kitchencontroller.AbstractKitchenController;
 import fr.inria.phoenix.diasuite.framework.misc.AppComponentBinder;
+import fr.inria.phoenix.scenario.kitchen.impl.context.CookerStatus;
+import fr.inria.phoenix.scenario.kitchen.impl.context.KitchenStatus;
+import fr.inria.phoenix.scenario.kitchen.impl.context.LastMove;
 import fr.inria.phoenix.scenario.kitchen.impl.controller.KitchenController;
 
 /* (non-Javadoc)
