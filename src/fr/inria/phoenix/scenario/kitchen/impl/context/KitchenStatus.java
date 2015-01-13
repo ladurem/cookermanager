@@ -21,8 +21,8 @@ public class KitchenStatus extends AbstractKitchenStatus{
 		
 		//VERIFICATION PERIODIQUE
 		
-		Float LastMoveSensor1 = lastMoveValue.value().getSensor1().floatValue();
-		Float LastMoveSensor2 = lastMoveValue.value().getSensor2().floatValue();
+		boolean LastMoveSensor1 = lastMoveValue.value().getSensor1().booleanValue();
+		boolean LastMoveSensor2 = lastMoveValue.value().getSensor2().booleanValue();
 		
 		String IsDoorOpen = discover.contactSensors().anyOne().getState().toString();
 		boolean IsCookerSwitchOn = discover.cookerStatus().booleanValue();
@@ -39,7 +39,7 @@ public class KitchenStatus extends AbstractKitchenStatus{
 			}
 			
 			// Personne devant la cuisinière
-			if(LastMoveSensor1 == 0){
+			if(LastMoveSensor1){
 				// Minuteur défini ?
 				if (Config.timer_user != -1){
 					// TODO
@@ -52,17 +52,17 @@ public class KitchenStatus extends AbstractKitchenStatus{
 				return new KitchenStatusValuePublishable(KitchenState.OK, true);
 			}
 			// Personne dans cuisine 
-			else if(LastMoveSensor2 == 0){
+			else if(LastMoveSensor2){
 				// TODO
 				// Rien ne se passe ?
 				DiaLog.info("[KITCHENSTATUS] Cas 2");
 			}
 			// Personne hors de la cuisine
-			else if(LastMoveSensor1 != 0 && LastMoveSensor2 !=0){
-				Config.kitchenTimer.setInterval(1500);
-				DiaLog.info("[KITCHENSTATUS] Cas 3");
-				return new KitchenStatusValuePublishable(KitchenState.STOP, true);
-			}
+//			else if(LastMoveSensor1 != 0 && LastMoveSensor2 !=0){ // TODO 
+//				Config.kitchenTimer.setInterval(1500);
+//				DiaLog.info("[KITCHENSTATUS] Cas 3");
+//				return new KitchenStatusValuePublishable(KitchenState.STOP, true);
+//			}
 		
 		
 		return new KitchenStatusValuePublishable(KitchenState.OK, true);

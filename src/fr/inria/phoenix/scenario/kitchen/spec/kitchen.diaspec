@@ -22,8 +22,8 @@ context KitchenStatus as KitchenState {
 
 }
 structure GetSensor{
-	sensor1 as Float;
-	sensor2 as Float;
+	sensor1 as Boolean;
+	sensor2 as Boolean;
 }
 context LastMove as GetSensor {
 	

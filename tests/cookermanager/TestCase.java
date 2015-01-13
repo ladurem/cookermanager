@@ -74,8 +74,8 @@ public class TestCase {
 	public void devantCuisiniere() {
 		DiaLog.info("====== devantCuisiniere() ======");
 		cooker = mockCooker("1", "kitchen", ("company"));
-		md1 = mockMotionDetector("1", "Kitchen_1", ("company"));
-		md2 = mockMotionDetector("2", "Kitchen_2", ("company"));
+		md1 = mockMotionDetector("1", "Kitchen_1", ("company"));	// MD cuisinière
+		md2 = mockMotionDetector("2", "Kitchen_2", ("company"));	// MD cuisine
 		cs = mockContactSensor("1", "location", ("company"));
 		em = mockElectricMeter("1", "location", ("company"));
 		tm = mockTimer("1");
@@ -84,9 +84,10 @@ public class TestCase {
 		em.setCurrentElectricConsumption(new State("5f", "45645454"));
 		cooker.status(new State("On", "454654564564"));
 		
-		// Les deux capteurs publient
-		md1.motion(new State("true", "454654564564"));
-//		md2.motion(new State("true", "454654564564"));
+		// On detecte un mouvement devant la cuisine
+		
+		md1.setMotion(new State("true", "454654564564"));
+		md2.motion(new State("false", "454654564564"));
 		
 //		
 //		cs.setState(true);

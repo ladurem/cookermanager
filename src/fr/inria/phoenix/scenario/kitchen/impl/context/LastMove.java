@@ -11,8 +11,8 @@ public class LastMove extends AbstractLastMove {
 	public LastMove(ServiceConfiguration serviceConfiguration) {
 		super(serviceConfiguration);
 	}
-	Float Sensor1 = 0f;
-	Float Sensor2 = 0f;
+	boolean Sensor1 = false;
+	boolean Sensor2 = false;
 	@Override
 	protected GetSensor onMotionFromMotionDetector(
 			MotionFromMotionDetector motionFromMotionDetector,
@@ -28,8 +28,6 @@ public class LastMove extends AbstractLastMove {
 		// Recuperation de la valeur
 		boolean valuePushed = Boolean.parseBoolean(motionFromMotionDetector.value().getState());
 
-		//Récuperation des autres capteurs
-		 MotionDetectorCompositeForMotionFromMotionDetector composite = discover.motionDetectors().whereLocation(motionSensorLocation);
 		 
 		 String sender = motionFromMotionDetector.sender().location();
 		 
@@ -37,24 +35,46 @@ public class LastMove extends AbstractLastMove {
 		 DiaLog.info("[LASTMOVE] sender : " + sender);
 		 DiaLog.info("[LASTMOVE] value Pushed : " + valuePushed);
 		 
+		 boolean valueGot;
+		 
 		 switch (motionSensorLocation) {
 			case "Kitchen_1":
+				valueGot= Boolean.parseBoolean((discover.motionDetectors().whereLocation("Kitchen_2").anyOne().getMotion().getState()));
 				if (valuePushed){
-					Sensor1 = 0f;
-					DiaLog.info("[LASTMOVE] Mouvement(Sensor1) detecté");
-				} else {
-					Sensor1 += 1;
-					DiaLog.info("[LASTMOVE] Mouvement(Sensor1) non detecté depuis " + Sensor1);
+					Sensor1 = true;
+					DiaLog.info("[LASTMOVE] Mouvement(Sensor1) detecté");	
+					if (valueGot){
+						Sensor2 = true;
+						DiaLog.info("[LASTMOVE] Mouvement(Sensor2) récupéré");
+					}
 				}
+				else{
+					if (valueGot){
+						Sensor2 = true;
+						DiaLog.info("[LASTMOVE] Mouvement(Sensor2) récupéré");
+					}
+				}
+					
 				break;
+				
 			case "Kitchen_2":
-				if (Boolean.parseBoolean(composite.toString())){
-					Sensor2 = 0f;
+				valueGot= Boolean.parseBoolean((discover.motionDetectors().whereLocation("Kitchen_1").anyOne().getMotion().getState()));
+				if (valuePushed){
+					Sensor2 = true;
 					DiaLog.info("[LASTMOVE] Mouvement(Sensor2) detecté");
-				} else {
-					Sensor2 += 1;
-					DiaLog.info("[LASTMOVE] Mouvement(Sensor2) non detecté depuis " + Sensor2);
+					
+					if (valueGot){
+						Sensor1 = true;
+						DiaLog.info("[LASTMOVE] Mouvement(Sensor1) récupéré");
+					}
 				}
+				else{
+					if (valueGot){
+						Sensor1 = true;
+						DiaLog.info("[LASTMOVE] Mouvement(Sensor1) récupéré");
+					}
+				}
+				
 				break;
 			default:
 				DiaLog.info("[LASTMOVE] Un capteur de mouvement situé ("+motionSensorLocation+") publie.");
@@ -63,8 +83,8 @@ public class LastMove extends AbstractLastMove {
 		 }
 		 
 		 
-		DiaLog.debug("[LASTMOVE]  : sensor1 > "+ Sensor1);
-		DiaLog.debug("[LASTMOVE]  : sensor2 > "+ Sensor2);
+		DiaLog.info("[LASTMOVE]  : sensor1 > "+ Sensor1);
+		DiaLog.info("[LASTMOVE]  : sensor2 > "+ Sensor2);
 		return new GetSensor(Sensor1,Sensor2);
 		
 	}
