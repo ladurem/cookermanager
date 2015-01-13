@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <DiaGraph>
 	<controller id="KitchenController" x="307.0" y="195.0"/>
-	<action id="Messenger/SendMessage" x="487.0" y="75.0"/>
-	<action id="Timer/ScheduleTimer" x="127.0" y="75.0"/>
 	<action id="Cooker/Off" x="307.0" y="75.0"/>
+	<action id="Timer/ScheduleTimer" x="127.0" y="75.0"/>
+	<action id="Messenger/SendMessage" x="487.0" y="75.0"/>
 	<context id="KitchenStatus" x="307.0" y="315.0"/>
 	<context id="LastMove" x="127.0" y="435.0"/>
 	<source id="MotionDetector/motion" x="127.0" y="555.0"/>

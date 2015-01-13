@@ -17,29 +17,25 @@ public class CookerStatus extends AbstractCookerStatus {
 			StatusFromCooker statusFromCooker,
 			DiscoverForStatusFromCooker discover) {
 		DiaLog.info("[COOKERSTATUS] onStateFromCooker");
-		String CookerState = discover.cookers().anyOne().getStatus().toString();
+		String CookerState = discover.cookers().anyOne().getStatus().getState();
 		Float ElectricConsumption = Float.parseFloat(discover.electricMeters()
 				.anyOne().getCurrentElectricConsumption().getState());
 
 		DiaLog.info("[COOKERSTATUS] CS : " + CookerState);
 		DiaLog.info("[COOKERSTATUS] EC : " + ElectricConsumption);
 
-		DiaLog.info("[COOKERSTATUS] OnOff=" + OnOffStatus.ON);
-		DiaLog.info("[COOKERSTATUS] STATE" + CookerState.equals(OnOffStatus.ON));
-		DiaLog.info("[COOKERSTATUS] STATE" + CookerState.equals("ON"));
-
-		if (CookerState.equals("ON") && ElectricConsumption != 0) {
+		if (CookerState.equals("On") && ElectricConsumption != 0) {
 			DiaLog.info("[COOKERSTATUS] système allumé");
 			return new CookerStatusValuePublishable(true, true);
-		} else if (CookerState.equals(OnOffStatus.ON)
+		} else if (CookerState.equals("On")
 				&& ElectricConsumption == 0) {
 			DiaLog.info("[COOKERSTATUS] Smartswich allume mais rien branche");
 			return new CookerStatusValuePublishable(false, true);
-		} else if (CookerState.equals(OnOffStatus.OFF)
+		} else if (CookerState.equals("Off")
 				&& ElectricConsumption != 0) {
 			DiaLog.info(" [COOKERSTATUS]Problème au niveau du smartwitch");
 			return new CookerStatusValuePublishable(false, true);
-		} else if (CookerState.equals(OnOffStatus.OFF)
+		} else if (CookerState.equals("Off")
 				&& ElectricConsumption == 0) {
 			DiaLog.info("[COOKERSTATUS] Système éteint");
 			return new CookerStatusValuePublishable(false, true);
