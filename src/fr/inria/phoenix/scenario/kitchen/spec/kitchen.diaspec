@@ -27,7 +27,7 @@ structure GetSensor{
 }
 context LastMove as GetSensor {
 	
-	when provided motion from MotionDetector get timerTriggered from Timer, motion from MotionDetector maybe publish;
+	when provided motion from MotionDetector get timerTriggered from Timer, motion from MotionDetector always publish;
 	
 }
 context CookerStatus as Boolean{

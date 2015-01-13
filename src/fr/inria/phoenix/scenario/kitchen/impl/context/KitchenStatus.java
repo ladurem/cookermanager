@@ -6,7 +6,6 @@ import fr.inria.phoenix.diasuite.framework.context.cookerstatus.CookerStatusValu
 import fr.inria.phoenix.diasuite.framework.context.kitchenstatus.AbstractKitchenStatus;
 import fr.inria.phoenix.diasuite.framework.context.lastmove.LastMoveValue;
 import fr.inria.phoenix.diasuite.framework.datatype.kitchenstate.KitchenState;
-import fr.inria.phoenix.diasuite.framework.device.timer.TimerTriggeredFromTimer;
 
 public class KitchenStatus extends AbstractKitchenStatus{
 

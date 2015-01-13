@@ -1,7 +1,15 @@
 package cookermanager;
 
-import static fr.inria.phoenix.diasuite.framework.mocks.Mock.*;
-import static org.junit.Assert.*;
+import static fr.inria.phoenix.diasuite.framework.mocks.Mock.TIMEOUT;
+import static fr.inria.phoenix.diasuite.framework.mocks.Mock.mockContactSensor;
+import static fr.inria.phoenix.diasuite.framework.mocks.Mock.mockCooker;
+import static fr.inria.phoenix.diasuite.framework.mocks.Mock.mockElectricMeter;
+import static fr.inria.phoenix.diasuite.framework.mocks.Mock.mockMotionDetector;
+import static fr.inria.phoenix.diasuite.framework.mocks.Mock.mockTimer;
+import static fr.inria.phoenix.diasuite.framework.mocks.Mock.shutdown;
+import static fr.inria.phoenix.diasuite.framework.mocks.Mock.underTest;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
 import org.junit.Before;

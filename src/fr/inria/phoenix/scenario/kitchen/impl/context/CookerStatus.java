@@ -3,7 +3,6 @@ package fr.inria.phoenix.scenario.kitchen.impl.context;
 import fr.inria.diagen.core.ServiceConfiguration;
 import fr.inria.diagen.log.DiaLog;
 import fr.inria.phoenix.diasuite.framework.context.cookerstatus.AbstractCookerStatus;
-import fr.inria.phoenix.diasuite.framework.datatype.onoffstatus.OnOffStatus;
 import fr.inria.phoenix.diasuite.framework.device.cooker.StatusFromCooker;
 
 public class CookerStatus extends AbstractCookerStatus {

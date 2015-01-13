@@ -14,7 +14,7 @@ public class LastMove extends AbstractLastMove {
 	Float Sensor1 = 0f;
 	Float Sensor2 = 0f;
 	@Override
-	protected LastMoveValuePublishable onMotionFromMotionDetector(
+	protected GetSensor onMotionFromMotionDetector(
 			MotionFromMotionDetector motionFromMotionDetector,
 			DiscoverForMotionFromMotionDetector discover) {
 		
@@ -54,11 +54,11 @@ public class LastMove extends AbstractLastMove {
 		 
 		DiaLog.debug("[LASTMOVE]  : sensor1 > "+ Sensor1);
 		DiaLog.debug("[LASTMOVE]  : sensor2 > "+ Sensor2);
-		
-		return new LastMoveValuePublishable(new GetSensor(Sensor1,Sensor2), true);
+		return new GetSensor(Sensor1,Sensor2);
 		
 	}
-	
+
+		
 	
 
 }
