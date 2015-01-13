@@ -48,7 +48,7 @@ public class KitchenStatus extends AbstractKitchenStatus{
 					if (Config.kitchenTimer != null)
 						Config.kitchenTimer.stopTimer();
 				}
-				DiaLog.info("[KITCHENSTATUS] Personne devant la cuisinière");
+				DiaLog.info("[KITCHENSTATUS] La personne est devant la cuisinière");
 				return new KitchenStatusValuePublishable(KitchenState.OK, true);
 			}
 			// Personne dans cuisine 
