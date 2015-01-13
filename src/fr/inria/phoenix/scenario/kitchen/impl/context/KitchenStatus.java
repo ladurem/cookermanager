@@ -4,6 +4,7 @@ import fr.inria.diagen.core.ServiceConfiguration;
 import fr.inria.diagen.log.DiaLog;
 import fr.inria.phoenix.diasuite.framework.context.cookerstatus.CookerStatusValue;
 import fr.inria.phoenix.diasuite.framework.context.kitchenstatus.AbstractKitchenStatus;
+import fr.inria.phoenix.diasuite.framework.context.lastmove.LastMoveValue;
 import fr.inria.phoenix.diasuite.framework.datatype.kitchenstate.KitchenState;
 import fr.inria.phoenix.diasuite.framework.device.timer.TimerTriggeredFromTimer;
 
@@ -14,27 +15,23 @@ public class KitchenStatus extends AbstractKitchenStatus{
 	}
 
 	@Override
-	protected KitchenStatusValuePublishable onTimerTriggeredFromTimer(
-			TimerTriggeredFromTimer timerTriggeredFromTimer,
-			DiscoverForTimerTriggeredFromTimer discover) {
+	protected KitchenStatusValuePublishable onLastMove(
+			LastMoveValue lastMoveValue, DiscoverForLastMove discover) {
 		
 		DiaLog.info("[KITCHENSTATUS] KitchenStatusValuePublishable");
 		
 		//VERIFICATION PERIODIQUE
 		
-		Float LastMoveSensor1 = discover.lastMove().getSensor1().floatValue();
-		Float LastMoveSensor2 = discover.lastMove().getSensor2().floatValue();
+		Float LastMoveSensor1 = lastMoveValue.value().getSensor1().floatValue();
+		Float LastMoveSensor2 = lastMoveValue.value().getSensor2().floatValue();
 		
 		String IsDoorOpen = discover.contactSensors().anyOne().getState().toString();
 		boolean IsCookerSwitchOn = discover.cookerStatus().booleanValue();
-		String TimerTrigger = timerTriggeredFromTimer.value();
 		
 		//TODO A configurer en fonction des temps d'alertes
-		DiaLog.info("[KITCHENSTATUS] Timer value : "+ TimerTrigger);
 		DiaLog.info("[KITCHENSTATUS] #DEBUG: SENSOR1 >"+LastMoveSensor1+" SENSOR2: >"+LastMoveSensor2+" DOORSTATUS: "+IsDoorOpen+" COOKERSTATUS: "+IsCookerSwitchOn);
 	
 		// Cuisinière allumée
-		if(!TimerTrigger.isEmpty()){
 			
 			// Initialisation du timer
 			if (Config.kitchenTimer == null){	// TODO : add
@@ -67,7 +64,7 @@ public class KitchenStatus extends AbstractKitchenStatus{
 				DiaLog.info("[KITCHENSTATUS] Cas 3");
 				return new KitchenStatusValuePublishable(KitchenState.STOP, true);
 			}
-		}
+		
 		
 		return new KitchenStatusValuePublishable(KitchenState.OK, true);
 	}
@@ -82,6 +79,7 @@ public class KitchenStatus extends AbstractKitchenStatus{
 
 		return new KitchenStatusValuePublishable(KitchenState.RUNTIMER, true);
 	}
+
 
 	
 	
