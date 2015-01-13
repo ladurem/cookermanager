@@ -11,7 +11,6 @@ public class KitchenStatus extends AbstractKitchenStatus{
 
 	public KitchenStatus(ServiceConfiguration serviceConfiguration) {
 		super(serviceConfiguration);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -19,7 +18,7 @@ public class KitchenStatus extends AbstractKitchenStatus{
 			TimerTriggeredFromTimer timerTriggeredFromTimer,
 			DiscoverForTimerTriggeredFromTimer discover) {
 		
-		DiaLog.debug("KitchenStatusValuePublishable");
+		DiaLog.info("[KITCHENSTATUS] KitchenStatusValuePublishable");
 		
 		//VERIFICATION PERIODIQUE
 		
@@ -31,8 +30,8 @@ public class KitchenStatus extends AbstractKitchenStatus{
 		String TimerTrigger = timerTriggeredFromTimer.value();
 		
 		//TODO A configurer en fonction des temps d'alertes
-		DiaLog.debug("Timer value : "+ TimerTrigger);
-		DiaLog.debug("#DEBUG: SENSOR1 >"+LastMoveSensor1+" SENSOR2: >"+LastMoveSensor2+" DOORSTATUS: "+IsDoorOpen+" COOKERSTATUS: "+IsCookerSwitchOn);
+		DiaLog.info("[KITCHENSTATUS] Timer value : "+ TimerTrigger);
+		DiaLog.info("[KITCHENSTATUS] #DEBUG: SENSOR1 >"+LastMoveSensor1+" SENSOR2: >"+LastMoveSensor2+" DOORSTATUS: "+IsDoorOpen+" COOKERSTATUS: "+IsCookerSwitchOn);
 	
 		// Cuisinière allumée
 		if(!TimerTrigger.isEmpty()){
@@ -53,19 +52,19 @@ public class KitchenStatus extends AbstractKitchenStatus{
 					if (Config.kitchenTimer != null)
 						Config.kitchenTimer.stopTimer();
 				}
-				DiaLog.info("Cas 1");
+				DiaLog.info("[KITCHENSTATUS] Cas 1");
 				return new KitchenStatusValuePublishable(KitchenState.OK, true);
 			}
 			// Personne dans cuisine 
 			else if(LastMoveSensor2 == 0){
 				// TODO
 				// Rien ne se passe ?
-				DiaLog.info("Cas 2");
+				DiaLog.info("[KITCHENSTATUS] Cas 2");
 			}
 			// Personne hors de la cuisine
 			else if(LastMoveSensor1 != 0 && LastMoveSensor2 !=0){
 				Config.kitchenTimer.setInterval(1500);
-				DiaLog.info("Cas 3");
+				DiaLog.info("[KITCHENSTATUS] Cas 3");
 				return new KitchenStatusValuePublishable(KitchenState.STOP, true);
 			}
 		}
@@ -79,7 +78,7 @@ public class KitchenStatus extends AbstractKitchenStatus{
 			DiscoverForCookerStatus discover) {
 		// PREMIER LANCEMENT :
 		// FONCTINNEMENT NORMAL ET LANCEMENT DU TIMER
-		DiaLog.debug("Kitchen status : Timer à lancer");
+		DiaLog.info("[KITCHENSTATUS] Kitchen status : Timer à lancer");
 
 		return new KitchenStatusValuePublishable(KitchenState.RUNTIMER, true);
 	}

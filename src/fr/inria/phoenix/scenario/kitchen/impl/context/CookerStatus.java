@@ -13,44 +13,40 @@ public class CookerStatus extends AbstractCookerStatus {
 	}
 
 	@Override
-	protected CookerStatusValuePublishable onStatusFromCooker(StatusFromCooker statusFromCooker,
+	protected CookerStatusValuePublishable onStatusFromCooker(
+			StatusFromCooker statusFromCooker,
 			DiscoverForStatusFromCooker discover) {
-		DiaLog.info("Cooker Status : onStateFromCooker");
-//		System.out.println("Cooker Status : onStateFromCooker");
-		
+		DiaLog.info("[COOKERSTATUS] onStateFromCooker");
 		String CookerState = discover.cookers().anyOne().getStatus().toString();
-		Float ElectricConsumption = Float.parseFloat(discover.electricMeters().anyOne().getCurrentElectricConsumption().getState());
-	
-		DiaLog.info("CS : " + CookerState);
-		DiaLog.info("EC : " + ElectricConsumption);
-		
-		DiaLog.info("OnOff="+OnOffStatus.ON);
-		DiaLog.info("STATE"+CookerState.equals(OnOffStatus.ON));
-		DiaLog.info("STATE"+CookerState.equals("ON"));
+		Float ElectricConsumption = Float.parseFloat(discover.electricMeters()
+				.anyOne().getCurrentElectricConsumption().getState());
 
-		
-		
-		
+		DiaLog.info("[COOKERSTATUS] CS : " + CookerState);
+		DiaLog.info("[COOKERSTATUS] EC : " + ElectricConsumption);
+
+		DiaLog.info("[COOKERSTATUS] OnOff=" + OnOffStatus.ON);
+		DiaLog.info("[COOKERSTATUS] STATE" + CookerState.equals(OnOffStatus.ON));
+		DiaLog.info("[COOKERSTATUS] STATE" + CookerState.equals("ON"));
+
 		if (CookerState.equals("ON") && ElectricConsumption != 0) {
-			DiaLog.warning("système allumé");	
+			DiaLog.info("[COOKERSTATUS] système allumé");
 			return new CookerStatusValuePublishable(true, true);
-			
-		} else if (CookerState.equals(OnOffStatus.ON) && ElectricConsumption == 0) {
-//			System.out.println("Smartswich allume mais rien branche");
-			DiaLog.warning("Smartswich allume mais rien branche");
+		} else if (CookerState.equals(OnOffStatus.ON)
+				&& ElectricConsumption == 0) {
+			DiaLog.info("[COOKERSTATUS] Smartswich allume mais rien branche");
 			return new CookerStatusValuePublishable(false, true);
-		} else if (CookerState.equals(OnOffStatus.OFF) && ElectricConsumption != 0) {
-//			System.out.println("Probleme au niveau du smartwitch");
-			DiaLog.warning("Problème au niveau du smartwitch");
+		} else if (CookerState.equals(OnOffStatus.OFF)
+				&& ElectricConsumption != 0) {
+			DiaLog.info(" [COOKERSTATUS]Problème au niveau du smartwitch");
 			return new CookerStatusValuePublishable(false, true);
-		} else if (CookerState.equals(OnOffStatus.OFF) && ElectricConsumption == 0) {
-			DiaLog.warning("Système éteint");
+		} else if (CookerState.equals(OnOffStatus.OFF)
+				&& ElectricConsumption == 0) {
+			DiaLog.info("[COOKERSTATUS] Système éteint");
 			return new CookerStatusValuePublishable(false, true);
 		} else {
-//			System.out.println("Probleme de CoockerStatus.java / Aucune condition");
-			DiaLog.warning("Probleme de CoockerStatus.java / Aucune condition");
+			DiaLog.info("[COOKERSTATUS] Probleme de CoockerStatus.java / Aucune condition");
 			return new CookerStatusValuePublishable(false, true);
-	}
+		}
 
-}
+	}
 }
