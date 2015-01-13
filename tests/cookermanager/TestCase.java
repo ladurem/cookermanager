@@ -15,6 +15,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import sun.rmi.runtime.Log;
 import fr.inria.diagen.log.DiaLog;
 import fr.inria.phoenix.diasuite.framework.datatype.state.State;
 import fr.inria.phoenix.diasuite.framework.mocks.ContactSensorMock;
@@ -80,20 +81,23 @@ public class TestCase {
 		em = mockElectricMeter("1", "location", ("company"));
 		tm = mockTimer("1");
 		
+		// On définit le statut du contact sensor
+		cs.setState(new State("true", "454654564564"));
+		
 		// On démarre la cuisinière
 		em.setCurrentElectricConsumption(new State("5f", "45645454"));
 		cooker.status(new State("On", "454654564564"));
 		
 		// On detecte un mouvement devant la cuisine
 		
-		md1.setMotion(new State("true", "454654564564"));
-		md2.motion(new State("false", "454654564564"));
+		md2.setMotion(new State("false", "454654564564"));
+		md1.motion(new State("true", "454654564564"));
 		
-//		
-//		cs.setState(true);
-//		cooker.setStatus(OnOffStatus.ON);
 		
-//		tm.timerTriggered("0", "1");
+		// On doit recevoir les valeurs mais rien ne se passe
+				
+		tm.timerTriggered("0", "1");
+		
 		
 		assertTrue(tm.expectPeriodicSchedule("1"));
 //		assertTrue(cooker.expectOff());

@@ -48,14 +48,14 @@ public class KitchenStatus extends AbstractKitchenStatus{
 					if (Config.kitchenTimer != null)
 						Config.kitchenTimer.stopTimer();
 				}
-				DiaLog.info("[KITCHENSTATUS] Cas 1");
+				DiaLog.info("[KITCHENSTATUS] Personne devant la cuisinière");
 				return new KitchenStatusValuePublishable(KitchenState.OK, true);
 			}
 			// Personne dans cuisine 
 			else if(LastMoveSensor2){
 				// TODO
 				// Rien ne se passe ?
-				DiaLog.info("[KITCHENSTATUS] Cas 2");
+				DiaLog.info("[KITCHENSTATUS] Dans la cuisine mais pas devant la cuisinière");
 			}
 			// Personne hors de la cuisine
 //			else if(LastMoveSensor1 != 0 && LastMoveSensor2 !=0){ // TODO 
