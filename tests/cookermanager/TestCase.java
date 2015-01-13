@@ -82,21 +82,23 @@ public class TestCase {
 		tm = mockTimer("1");
 		
 		// On définit le statut du contact sensor
-		cs.setState(new State("true", "454654564564"));
+		cs.setState(new State("true", "1"));
 		
 		// On démarre la cuisinière
-		em.setCurrentElectricConsumption(new State("5f", "45645454"));
-		cooker.status(new State("On", "454654564564"));
+		em.setCurrentElectricConsumption(new State("5f", "2"));
+		cooker.status(new State("On", "3"));
 		
 		// On detecte un mouvement devant la cuisine
 		
-		md2.setMotion(new State("false", "454654564564"));
-		md1.motion(new State("true", "454654564564"));
+		md2.setMotion(new State("false", "4")); 	// Cuisine
+		md1.motion(new State("false", "5"));		// Cuisinière
 		
 		
 		// On doit recevoir les valeurs mais rien ne se passe
 				
-		tm.timerTriggered("0", "1");
+//		tm.timerTriggered("0", "1");
+		
+		
 		
 		
 		assertTrue(tm.expectPeriodicSchedule("1"));

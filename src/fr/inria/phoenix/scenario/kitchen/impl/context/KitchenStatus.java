@@ -24,7 +24,7 @@ public class KitchenStatus extends AbstractKitchenStatus{
 		boolean LastMoveSensor1 = lastMoveValue.value().getSensor1().booleanValue();
 		boolean LastMoveSensor2 = lastMoveValue.value().getSensor2().booleanValue();
 		
-		String IsDoorOpen = discover.contactSensors().anyOne().getState().toString();
+		String IsDoorOpen = discover.contactSensors().anyOne().getState().getState();
 		boolean IsCookerSwitchOn = discover.cookerStatus().booleanValue();
 		
 		//TODO A configurer en fonction des temps d'alertes
@@ -56,16 +56,18 @@ public class KitchenStatus extends AbstractKitchenStatus{
 				// TODO
 				// Rien ne se passe ?
 				DiaLog.info("[KITCHENSTATUS] Dans la cuisine mais pas devant la cuisinière");
+				return new KitchenStatusValuePublishable(KitchenState.OK, true);
 			}
 			// Personne hors de la cuisine
-//			else if(LastMoveSensor1 != 0 && LastMoveSensor2 !=0){ // TODO 
-//				Config.kitchenTimer.setInterval(1500);
-//				DiaLog.info("[KITCHENSTATUS] Cas 3");
-//				return new KitchenStatusValuePublishable(KitchenState.STOP, true);
-//			}
+			else if( !LastMoveSensor1 && !LastMoveSensor2){ 
+				Config.kitchenTimer.setInterval(1500);
+				DiaLog.info("[KITCHENSTATUS] La personne est sortie de la cuisine, on augmente alors la valeur décrémentée");
+				DiaLog.info("[KITCHENSTATUS] Pour les tests, on considère que la cuisinière s'éteint a ce moment la (doit être changé)");
+				return new KitchenStatusValuePublishable(KitchenState.STOP, true);
+			}
 		
 		
-		return new KitchenStatusValuePublishable(KitchenState.OK, true);
+		return new KitchenStatusValuePublishable(KitchenState.OK, false);
 	}
 
 	@Override

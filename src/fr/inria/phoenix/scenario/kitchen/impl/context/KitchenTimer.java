@@ -3,6 +3,8 @@ package fr.inria.phoenix.scenario.kitchen.impl.context;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import fr.inria.diagen.log.DiaLog;
+
 
 public class KitchenTimer {
 	
@@ -34,6 +36,7 @@ public class KitchenTimer {
 	}
 	
 	public void setInterval(long interval){
+		DiaLog.info("Intervalle changé : " + Long.toString(interval));
 		this.interval = interval;
 	}
 	
