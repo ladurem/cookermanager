@@ -59,6 +59,7 @@ public class LastMove extends AbstractLastMove {
 			default:
 				DiaLog.info("[LASTMOVE] Un capteur de mouvement situé ("+motionSensorLocation+") publie.");
 				break;
+
 		 }
 		 
 		 
