@@ -19,36 +19,46 @@ public class LastMove extends AbstractLastMove {
 			DiscoverForMotionFromMotionDetector discover) {
 		
 		DiaLog.info("[LASTMOVE] GetSensor");
-
+		
+		// Si une donnée est PUSH ..
+		
 		//Recuperation de la position du capteur
-		String motionSensorLocation = discover.motionDetectors().anyOne().location();
+		String motionSensorLocation = motionFromMotionDetector.sender().location();
+		
+		// Recuperation de la valeur
+		boolean valuePushed = Boolean.parseBoolean(motionFromMotionDetector.value().getState());
 
 		//Récuperation des autres capteurs
 		 MotionDetectorCompositeForMotionFromMotionDetector composite = discover.motionDetectors().whereLocation(motionSensorLocation);
-	
+		 
+		 String sender = motionFromMotionDetector.sender().location();
+		 
+		 DiaLog.info("[LASTMOVE] value Pushed : " + valuePushed);
+		 DiaLog.info("[LASTMOVE] sender : " + sender);
+		 DiaLog.info("[LASTMOVE] value Pushed : " + valuePushed);
 		 
 		 switch (motionSensorLocation) {
-		case "Kitchen_1":
-			if (Boolean.parseBoolean(composite.andLocation(motionSensorLocation).toString())){
-				Sensor1 = 0f;
-				DiaLog.info("[LASTMOVE] Mouvement(Sensor1) detecté");
-			} else {
-				Sensor1 += 1;
-				DiaLog.info("[LASTMOVE] Mouvement(Sensor1) non detecté depuis " + Sensor1);
-			}
-			break;
-		case "Kitchen_2":
-			if (Boolean.parseBoolean(composite.toString())){
-				Sensor2 = 0f;
-				DiaLog.info("[LASTMOVE] Mouvement(Sensor2) detecté");
-			} else {
-				Sensor2 += 1;
-				DiaLog.info("[LASTMOVE] Mouvement(Sensor2) non detecté depuis " + Sensor2);
-			}
-			break;
-		default:
-			DiaLog.info("[LASTMOVE] Un capteur de mouvement situé ("+motionSensorLocation+") publie.");
-			break;
+			case "Kitchen_1":
+				if (valuePushed){
+					Sensor1 = 0f;
+					DiaLog.info("[LASTMOVE] Mouvement(Sensor1) detecté");
+				} else {
+					Sensor1 += 1;
+					DiaLog.info("[LASTMOVE] Mouvement(Sensor1) non detecté depuis " + Sensor1);
+				}
+				break;
+			case "Kitchen_2":
+				if (Boolean.parseBoolean(composite.toString())){
+					Sensor2 = 0f;
+					DiaLog.info("[LASTMOVE] Mouvement(Sensor2) detecté");
+				} else {
+					Sensor2 += 1;
+					DiaLog.info("[LASTMOVE] Mouvement(Sensor2) non detecté depuis " + Sensor2);
+				}
+				break;
+			default:
+				DiaLog.info("[LASTMOVE] Un capteur de mouvement situé ("+motionSensorLocation+") publie.");
+				break;
 		 }
 		 
 		 
