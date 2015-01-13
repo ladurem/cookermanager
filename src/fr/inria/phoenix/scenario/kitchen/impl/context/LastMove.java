@@ -21,14 +21,14 @@ public class LastMove extends AbstractLastMove {
 		DiaLog.info("[LASTMOVE] GetSensor");
 
 		//Recuperation de la position du capteur
-		String motionSensorLocation = discover.motionDetectors().all().anyOne().location();
+		String motionSensorLocation = discover.motionDetectors().anyOne().location();
 
 		//Récuperation des autres capteurs
 		 MotionDetectorCompositeForMotionFromMotionDetector composite = discover.motionDetectors().whereLocation(motionSensorLocation);
 	
 		 
 		 switch (motionSensorLocation) {
-		case "kitchen_1":
+		case "Kitchen_1":
 			if (Boolean.parseBoolean(composite.andLocation(motionSensorLocation).toString())){
 				Sensor1 = 0f;
 				DiaLog.info("[LASTMOVE] Mouvement(Sensor1) detecté");
@@ -37,7 +37,7 @@ public class LastMove extends AbstractLastMove {
 				DiaLog.info("[LASTMOVE] Mouvement(Sensor1) non detecté depuis " + Sensor1);
 			}
 			break;
-		case "kitchen_2":
+		case "Kitchen_2":
 			if (Boolean.parseBoolean(composite.toString())){
 				Sensor2 = 0f;
 				DiaLog.info("[LASTMOVE] Mouvement(Sensor2) detecté");
@@ -47,6 +47,7 @@ public class LastMove extends AbstractLastMove {
 			}
 			break;
 		default:
+			DiaLog.info("[LASTMOVE] Un capteur de mouvement situé ("+motionSensorLocation+") publie.");
 			break;
 		 }
 		 
