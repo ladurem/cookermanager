@@ -20,49 +20,37 @@ public class LastMove extends AbstractLastMove {
 		
 		DiaLog.info("[LASTMOVE] GetSensor");
 
-//		//Recuperation de la position du capteur
-//		String motionSensorLocation = discover.motionDetectors().all().anyOne().location();
-//
-//		//Récuperation des autres capteurs
-//		 MotionDetectorCompositeForTimerTriggeredFromTimer composite = discover.motionDetectors().whereLocation(motionSensorLocation);
-//	
-//		for(MotionDetectorProxyForTimerTriggeredFromTimer sensor : composite){
-		
 		//Recuperation de la position du capteur
 		String motionSensorLocation = discover.motionDetectors().all().anyOne().location();
 
 		//Récuperation des autres capteurs
 		 MotionDetectorCompositeForMotionFromMotionDetector composite = discover.motionDetectors().whereLocation(motionSensorLocation);
 	
-		for(MotionDetectorProxyForMotionFromMotionDetector sensor : composite){
-		
-		
-			DiaLog.info("GetSensor : val capteur = "+sensor.getMotion() +" | id= " + sensor.id());
-			if(Integer.parseInt(sensor.id()) == 1){
-				if (Boolean.parseBoolean(sensor.getMotion().getState())) {
-					Sensor1 = 0f;
-					DiaLog.info("[LASTMOVE] Mouvement(Sensor1) detecté");
-//					System.out.println("Mouvement(Sensor1) detecté");
-
-				} else {
-					Sensor1 += 1;
-					DiaLog.info("[LASTMOVE] Mouvement(Sensor1) non detecté depuis " + Sensor1);
-//					System.out.println("Mouvement(Sensor1) non detecté" + Sensor1);
-				}
+		 
+		 switch (motionSensorLocation) {
+		case "kitchen_1":
+			if (Boolean.parseBoolean(composite.andLocation(motionSensorLocation).toString())){
+				Sensor1 = 0f;
+				DiaLog.info("[LASTMOVE] Mouvement(Sensor1) detecté");
 			} else {
-				if (Boolean.parseBoolean(sensor.getMotion().getState())) {
-					Sensor2 = 0f;
-					DiaLog.info("[LASTMOVE] Mouvement(Sensor2) detecté");
-//					System.out.println("Mouvement(Sensor2) detecté");
-
-				} else {
-					Sensor2 += 1;
-					DiaLog.info("[LASTMOVE] Mouvement(Sensor2) non detecté depuis " + Sensor2);
-//					System.out.println("Mouvement(Sensor2) non detecté" + Sensor2);
-				}
-				
+				Sensor1 += 1;
+				DiaLog.info("[LASTMOVE] Mouvement(Sensor1) non detecté depuis " + Sensor1);
 			}
-		}
+			break;
+		case "kitchen_2":
+			if (Boolean.parseBoolean(composite.toString())){
+				Sensor2 = 0f;
+				DiaLog.info("[LASTMOVE] Mouvement(Sensor2) detecté");
+			} else {
+				Sensor2 += 1;
+				DiaLog.info("[LASTMOVE] Mouvement(Sensor2) non detecté depuis " + Sensor2);
+			}
+			break;
+		default:
+			break;
+		 }
+		 
+		 
 		DiaLog.debug("[LASTMOVE]  : sensor1 > "+ Sensor1);
 		DiaLog.debug("[LASTMOVE]  : sensor2 > "+ Sensor2);
 		
