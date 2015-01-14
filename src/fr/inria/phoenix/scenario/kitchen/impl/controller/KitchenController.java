@@ -27,6 +27,8 @@ public class KitchenController extends AbstractKitchenController {
 		if (kitchenStatus.value().toString().equals("STOP")) {
 			DiaLog.info("[KITCHENCONTROLLER] KitchenStatus = STOP");
 			discover.cookers().all().off();
+			discover.timers().all().cancel("1");
+			
 		}
 		if (kitchenStatus.value().toString().equals("RUNTIMER")) {
 			DiaLog.info("[KITCHENCONTROLLER] KitchenStatus = PREMIER TOP");
