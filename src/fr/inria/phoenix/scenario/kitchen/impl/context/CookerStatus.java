@@ -15,8 +15,10 @@ public class CookerStatus extends AbstractCookerStatus {
 	protected CookerStatusValuePublishable onStatusFromCooker(
 			StatusFromCooker statusFromCooker,
 			DiscoverForStatusFromCooker discover) {
+
 		DiaLog.info("[COOKERSTATUS] onStateFromCooker");
 		String CookerState = discover.cookers().anyOne().getStatus().getState();
+
 		Float ElectricConsumption = Float.parseFloat(discover.electricMeters()
 				.anyOne().getCurrentElectricConsumption().getState());
 
@@ -26,16 +28,13 @@ public class CookerStatus extends AbstractCookerStatus {
 		if (CookerState.equals("On") && ElectricConsumption != 0) {
 			DiaLog.info("[COOKERSTATUS] système allumé");
 			return new CookerStatusValuePublishable(true, true);
-		} else if (CookerState.equals("On")
-				&& ElectricConsumption == 0) {
+		} else if (CookerState.equals("On") && ElectricConsumption == 0) {
 			DiaLog.info("[COOKERSTATUS] Smartswich allume mais rien branche");
 			return new CookerStatusValuePublishable(false, true);
-		} else if (CookerState.equals("Off")
-				&& ElectricConsumption != 0) {
+		} else if (CookerState.equals("Off") && ElectricConsumption != 0) {
 			DiaLog.info(" [COOKERSTATUS]Problème au niveau du smartwitch");
 			return new CookerStatusValuePublishable(false, true);
-		} else if (CookerState.equals("Off")
-				&& ElectricConsumption == 0) {
+		} else if (CookerState.equals("Off") && ElectricConsumption == 0) {
 			DiaLog.info("[COOKERSTATUS] Système éteint");
 			return new CookerStatusValuePublishable(false, true);
 		} else {
@@ -43,5 +42,16 @@ public class CookerStatus extends AbstractCookerStatus {
 			return new CookerStatusValuePublishable(false, true);
 		}
 
+	}
+
+	@Override
+	protected Boolean getValue(DiscoverForGet discover) {
+		String CookerState = discover.cookers().anyOne().getStatus().getState();
+
+		Float ElectricConsumption = Float.parseFloat(discover.electricMeters()
+				.anyOne().getCurrentElectricConsumption().getState());
+//TODO remettre les conditions comme au dessus
+		
+		return null;
 	}
 }

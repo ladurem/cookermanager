@@ -1,43 +1,31 @@
 include "taxonomy.diaspec";
 
-// kitchen controller
-controller KitchenController{
-	when provided KitchenStatus 
-	do Off on Cooker,
-	SendMessage on Messenger,
-	ScheduleTimer on Timer;
-
+context CookerStatus as Boolean {
+	when provided status from Cooker get status from Cooker, currentElectricConsumption from ElectricMeter maybe publish;
+	when required get status from Cooker, currentElectricConsumption from ElectricMeter;
 }
 
 context KitchenStatus as KitchenState {
-	when provided CookerStatus
-	get CookerStatus 
-	maybe publish;
-	
-	
-	when provided LastMove 
-	get CookerStatus, state from ContactSensor 
-	maybe publish;
-	
+	when provided CookerStatus get CookerStatus maybe publish;
+	when provided LastMove get CookerStatus, state from ContactSensor maybe publish;
+}
+
+// kitchen controller
+controller KitchenController {
+	when provided KitchenStatus do Off on Cooker, SendMessage on Messenger, ScheduleTimer on Timer;
+}
+
+context LastMove as GetSensor {
+	when provided motion from MotionDetector get motion from MotionDetector no publish; 
+	when provided timerTriggered from Timer always publish; 
 
 }
-structure GetSensor{
+
+structure GetSensor {
 	sensor1 as Boolean;
 	sensor2 as Boolean;
 }
-context LastMove as GetSensor {
-	
-	when provided motion from MotionDetector get timerTriggered from Timer, motion from MotionDetector always publish;
-	when provided timerTriggered from Timer get motion from MotionDetector always publish;
-}
-context CookerStatus as Boolean{
-	when provided status from Cooker
-	get status from Cooker,
-	currentElectricConsumption from ElectricMeter
-	maybe publish;
-	
-}
 
 enumeration KitchenState {
-	OK,WARN,STOP,RUNTIMER
+	OK, WARN, STOP, RUNTIMER
 }
