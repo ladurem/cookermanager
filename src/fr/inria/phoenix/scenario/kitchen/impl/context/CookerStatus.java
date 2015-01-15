@@ -30,7 +30,7 @@ public class CookerStatus extends AbstractCookerStatus {
 			return new CookerStatusValuePublishable(true, true);
 		} else if (CookerState.equals("On") && ElectricConsumption == 0) {
 			DiaLog.info("[COOKERSTATUS] Smartswich allume mais rien branche");
-			return new CookerStatusValuePublishable(false, false);
+			return new CookerStatusValuePublishable(false, true);
 		} else if (CookerState.equals("Off") && ElectricConsumption != 0) {
 			DiaLog.info(" [COOKERSTATUS]Problème au niveau du smartwitch");
 			return new CookerStatusValuePublishable(false, false);
