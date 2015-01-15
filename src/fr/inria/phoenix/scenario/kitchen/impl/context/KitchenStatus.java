@@ -75,9 +75,10 @@ public class KitchenStatus extends AbstractKitchenStatus{
 			}
 		
 		}
-		else{
-			//TODO
+		else{ // Not running
+			return new KitchenStatusValuePublishable(KitchenState.STOP, true);
 		}
+		
 		return new KitchenStatusValuePublishable(KitchenState.ERROR, true); 
 	}
 
