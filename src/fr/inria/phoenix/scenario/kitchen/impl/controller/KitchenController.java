@@ -32,7 +32,7 @@ public class KitchenController extends AbstractKitchenController {
 		}
 		if (kitchenStatus.value().toString().equals("RUNTIMER")) {
 			DiaLog.info("[KITCHENCONTROLLER] KitchenStatus = PREMIER TOP");
-			discover.timers().all().periodicSchedule("1", 1000, 1000);
+			discover.timers().all().periodicSchedule("1", 1000, 5000);
 		}
 		DiaLog.info("[KITCHENCONTROLLER] Fin du controlleur");
 		return;

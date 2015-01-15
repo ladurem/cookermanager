@@ -62,10 +62,12 @@ public class KitchenTimer {
 				  if (timer > 0){
 		    	    	timer -= interval;
 		    	    	System.out.println(timer);
+		    	    	DiaLog.info(Long.toString(timer));
 		    	    }
 		    	    else{
 		    	    	running = false;
 		    	    	t.cancel();
+		    	    	DiaLog.info("STOPPED");
 		    	    	System.out.println("STOPPED");
 		    	    }
 			  }
