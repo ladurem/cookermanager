@@ -62,7 +62,7 @@ public class KitchenStatus extends AbstractKitchenStatus{
 				return new KitchenStatusValuePublishable(KitchenState.ALARM2, true);
 			}
 			else{	//Porte ouverte
-				return new KitchenStatusValuePublishable(KitchenState.ARLARM1, true);
+				return new KitchenStatusValuePublishable(KitchenState.ALARM1, true);
 			}
 		}
 		if (timer >= Config.DEFAULT_TIMER + Config.TIME_BEFORE_NOTIFICATION){

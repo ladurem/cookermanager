@@ -17,26 +17,51 @@ public class KitchenController extends AbstractKitchenController {
 
 		DiaLog.info("[KITCHENCONTROLLER] Controller : "+ kitchenStatus.value().toString());
 
-		if (kitchenStatus.value().toString().equals("OK")) {
+		
+		switch (kitchenStatus.value().toString()) {
+		/**ACTIONS **/ 
+		case "OK":
 			DiaLog.info("[KITCHENCONTROLLER] KitchenStatus = OK");
-		}
-		else if (kitchenStatus.value().toString().equals("WARN")) {
-			DiaLog.info("[KITCHENCONTROLLER] KitchenStatus = WARN");
-			discover.messengers().all().sendMessage(null, "Titre", "MEssage", null);
-		}
-		else if (kitchenStatus.value().toString().equals("STOP")) {
+			break;
+		case "RUNTIMER":
+			DiaLog.info("[KITCHENCONTROLLER] KitchenStatus = PREMIER TOP");
+			discover.timers().all().periodicSchedule("1", 1000, 5000);
+			break;
+		case "STOP":
 			DiaLog.info("[KITCHENCONTROLLER] KitchenStatus = STOP");
 			discover.cookers().all().off();
 			discover.timers().all().cancel("1");
+			break;
 			
-		}
-		else if (kitchenStatus.value().toString().equals("RUNTIMER")) {
-			DiaLog.info("[KITCHENCONTROLLER] KitchenStatus = PREMIER TOP");
-			discover.timers().all().periodicSchedule("1", 1000, 5000);
-		}
-		else if (kitchenStatus.value().toString().equals("ERROR")) {
+			
+			/****MESSAGES***/
+		case "ERROR":
 			DiaLog.info("[KITCHENCONTROLLER] KitchenStatus = ERROR");
-			discover.messengers().all().sendMessage(null, "Titre", "MEssage", null); // TODO
+			discover.messengers().all().sendMessage(null, "ERREUR", "Une erreur est survenue.", null); 
+			break;
+			
+		case "WARN1":
+			DiaLog.info("[KITCHENCONTROLLER] KitchenStatus = WARN");
+			discover.messengers().all().sendMessage(null, "Attention", "Votre cuisinière est allumée.", null);
+			break;
+		case "WARN2":
+			DiaLog.info("[KITCHENCONTROLLER] KitchenStatus = WARN2");
+			discover.messengers().all().sendMessage(null, "Attention", "[FORT] - Votre cuisinière est allumée.", null);
+			break;
+			
+		case "ALARME1":
+			DiaLog.info("[KITCHENCONTROLLER] KitchenStatus = ALARME1");
+			discover.messengers().all().sendMessage(null, "ALERTE", "Attention, votre cuisinière est allumée. Extinction de votre cuisnière.", null);
+			break;
+		case "ALARME2":
+			DiaLog.info("[KITCHENCONTROLLER] KitchenStatus = ALARME2");
+			discover.messengers().all().sendMessage(null, "ALERTE", "[FORT] Attention, votre cuisinière est allumée. Extinction de votre cuisnière.", null);
+			break;
+			
+			
+		default:
+			DiaLog.info("[KITCHENCONTROLLER] Erreur d'action = "+kitchenStatus.value().toString());
+			break;
 		}
 		DiaLog.info("[KITCHENCONTROLLER] Fin du controlleur");
 		return;
