@@ -13,7 +13,7 @@ public class LastMove extends AbstractLastMove {
 	boolean Sensor2 = false;
 
 	public LastMove(ServiceConfiguration serviceConfiguration) {
-		super(serviceConfiguration);
+		super(serviceConfiguration);;
 	}
 
 	@Override

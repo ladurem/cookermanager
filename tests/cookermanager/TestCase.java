@@ -40,7 +40,7 @@ public class TestCase {
 	
 	@Before
 	public void setup() throws Exception {
-		TIMEOUT = 5000;
+		TIMEOUT = 1000;
 		underTest(ComponentBinder.class);
 	}
 	
@@ -71,8 +71,43 @@ public class TestCase {
 //
 //	}
 	
+	@Test
+	public void devantCuisiniere() {
+		DiaLog.info("====== devantCuisiniere() ======");
+		cooker = mockCooker("1", "kitchen", ("company"));
+		md1 = mockMotionDetector("1", "Kitchen_1", ("company"));	// MD cuisinière
+		md2 = mockMotionDetector("2", "Kitchen_2", ("company"));	// MD cuisine
+		cs = mockContactSensor("1", "location", ("company"));
+		em = mockElectricMeter("1", "location", ("company"));
+		tm = mockTimer("1");
+		
+		assertFalse(tm.expectPeriodicSchedule("1"));
+		
+		// On définit le statut du contact sensor
+		cs.setState(new State("true", "1"));
+		
+		// On démarre la cuisinière
+		em.setCurrentElectricConsumption(new State("5f", "2"));
+		cooker.status(new State("On", "3"));
+		
+		// On detecte un mouvement devant la cuisine
+		
+		md2.setMotion(new State("true", "4")); 	// Cuisine
+		md1.motion(new State("true", "5"));		// Cuisinière
+		
+		
+		// On doit recevoir les valeurs mais rien ne se passe
+
+		tm.timerTriggered("0", "1");
+		
+		assertTrue(tm.expectPeriodicSchedule("1"));
+		
+		
+	}
+	
+	
 //	@Test
-//	public void devantCuisiniere() {
+//	public void expectTimer() {
 //		DiaLog.info("====== devantCuisiniere() ======");
 //		cooker = mockCooker("1", "kitchen", ("company"));
 //		md1 = mockMotionDetector("1", "Kitchen_1", ("company"));	// MD cuisinière
@@ -90,62 +125,17 @@ public class TestCase {
 //		
 //		// On detecte un mouvement devant la cuisine
 //		
-//		md2.setMotion(new State("false", "4")); 	// Cuisine
-//		md1.motion(new State("true", "5"));		// Cuisinière
+//		md2.setMotion(new State("true", "4")); 	// Cuisine
+//		md1.setMotion(new State("true", "5"));		// Cuisinière
 //		
 //		
 //		// On doit recevoir les valeurs mais rien ne se passe
 //				
-////		tm.timerTriggered("0", "1");
+//		tm.timerTriggered("0", "1");
 //		
-//		
-//		
-//		
-//		assertTrue(cooker.expectOff());
-////		assertTrue(cooker.expectOff());
-//		
-////		temperatureSensor = mockTemperatureSensor("TemperatureSensor", "A29", new Company("Tester"));
-////		controlPanel = mockControlPanel("ControlPanel", "A29", new Company("Tester"));
-////		hvacSystem = mockHVACSystem("HAVCSystem", "A29", new Company("Tester"));
-////		
-////		controlPanel.setTargetTemperature(15.0f);
-////		hvacSystem.setStatus(HVACStatus.STOPPED);
-////		temperatureSensor.temperature(10.0f, TemperatureUnit.CELSIUS);
-////		
-////		assertTrue(hvacSystem.expectWarmUp());
+//		assertTrue(tm.expectPeriodicSchedule("1"));
+//
 //	}
-	
-	
-	@Test
-	public void testTimer() {
-		DiaLog.info("====== devantCuisiniere() ======");
-		cooker = mockCooker("1", "kitchen", ("company"));
-		md1 = mockMotionDetector("1", "Kitchen_1", ("company"));	// MD cuisinière
-		md2 = mockMotionDetector("2", "Kitchen_2", ("company"));	// MD cuisine
-		cs = mockContactSensor("1", "location", ("company"));
-		em = mockElectricMeter("1", "location", ("company"));
-		tm = mockTimer("1");
-		
-		// On définit le statut du contact sensor
-		cs.setState(new State("true", "1"));
-		
-		// On démarre la cuisinière
-		em.setCurrentElectricConsumption(new State("5f", "2"));
-		cooker.status(new State("On", "3"));
-		
-		// On detecte un mouvement devant la cuisine
-		
-		md2.setMotion(new State("true", "4")); 	// Cuisine
-		md1.setMotion(new State("true", "5"));		// Cuisinière
-		
-		
-		// On doit recevoir les valeurs mais rien ne se passe
-				
-		tm.timerTriggered("0", "1");
-		
-		assertTrue(tm.expectPeriodicSchedule("1"));
-
-	}
 	
 	
 }

@@ -27,10 +27,10 @@ public class KitchenStatus extends AbstractKitchenStatus{
 		String IsDoorOpen = discover.contactSensors().anyOne().getState().getState();
 		
 		
-		if (discover.cookerStatus() != null){
-			boolean IsCookerSwitchOn  = discover.cookerStatus().booleanValue();
-			DiaLog.info("[KITCHENSTATUS] COOKERSTATUS: "+IsCookerSwitchOn);
-		}
+		
+		boolean IsCookerSwitchOn  = discover.cookerStatus().booleanValue();
+		DiaLog.info("[KITCHENSTATUS] COOKERSTATUS: "+IsCookerSwitchOn);
+		
 		//TODO A configurer en fonction des temps d'alertes
 		DiaLog.info("[KITCHENSTATUS] #DEBUG: SENSOR1 >"+ LastMoveSensor1);
 		DiaLog.info("[KITCHENSTATUS] SENSOR2: >"+LastMoveSensor2);
@@ -39,7 +39,7 @@ public class KitchenStatus extends AbstractKitchenStatus{
 				
 	
 		// Cuisinière allumée
-			
+		if (IsCookerSwitchOn){	
 			// Initialisation du timer
 			if (Config.kitchenTimer == null){	// TODO : add
 				DiaLog.info("New Timer");
@@ -74,8 +74,11 @@ public class KitchenStatus extends AbstractKitchenStatus{
 				return new KitchenStatusValuePublishable(KitchenState.STOP, true);
 			}
 		
-		
-		return new KitchenStatusValuePublishable(KitchenState.OK, false);
+		}
+		else{
+			//TODO
+		}
+		return new KitchenStatusValuePublishable(KitchenState.ERROR, true); 
 	}
 
 	@Override

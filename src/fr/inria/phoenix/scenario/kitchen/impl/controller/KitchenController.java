@@ -20,19 +20,23 @@ public class KitchenController extends AbstractKitchenController {
 		if (kitchenStatus.value().toString().equals("OK")) {
 			DiaLog.info("[KITCHENCONTROLLER] KitchenStatus = OK");
 		}
-		if (kitchenStatus.value().toString().equals("WARN")) {
+		else if (kitchenStatus.value().toString().equals("WARN")) {
 			DiaLog.info("[KITCHENCONTROLLER] KitchenStatus = WARN");
 			discover.messengers().all().sendMessage(null, "Titre", "MEssage", null);
 		}
-		if (kitchenStatus.value().toString().equals("STOP")) {
+		else if (kitchenStatus.value().toString().equals("STOP")) {
 			DiaLog.info("[KITCHENCONTROLLER] KitchenStatus = STOP");
 			discover.cookers().all().off();
 			discover.timers().all().cancel("1");
 			
 		}
-		if (kitchenStatus.value().toString().equals("RUNTIMER")) {
+		else if (kitchenStatus.value().toString().equals("RUNTIMER")) {
 			DiaLog.info("[KITCHENCONTROLLER] KitchenStatus = PREMIER TOP");
 			discover.timers().all().periodicSchedule("1", 1000, 5000);
+		}
+		else if (kitchenStatus.value().toString().equals("ERROR")) {
+			DiaLog.info("[KITCHENCONTROLLER] KitchenStatus = ERROR");
+			discover.messengers().all().sendMessage(null, "Titre", "MEssage", null); // TODO
 		}
 		DiaLog.info("[KITCHENCONTROLLER] Fin du controlleur");
 		return;
