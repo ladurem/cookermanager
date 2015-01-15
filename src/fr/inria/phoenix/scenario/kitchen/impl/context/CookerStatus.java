@@ -17,10 +17,9 @@ public class CookerStatus extends AbstractCookerStatus {
 			DiscoverForStatusFromCooker discover) {
 
 		DiaLog.info("[COOKERSTATUS] onStateFromCooker");
-		String CookerState = discover.cookers().anyOne().getStatus().getState();
+		String CookerState = statusFromCooker.value().getState();
 
-		Float ElectricConsumption = Float.parseFloat(discover.electricMeters()
-				.anyOne().getCurrentElectricConsumption().getState());
+		Float ElectricConsumption = Float.parseFloat(discover.electricMeters().anyOne().getCurrentElectricConsumption().getState());
 
 		DiaLog.info("[COOKERSTATUS] CS : " + CookerState);
 		DiaLog.info("[COOKERSTATUS] EC : " + ElectricConsumption);

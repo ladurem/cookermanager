@@ -9,8 +9,10 @@ public class Config {
 	
 	public static int timer_user = -1;
 	
-	public static KitchenTimer kitchenTimer = null;
-	
 	public static boolean notified = false;
+	
+	public final static int DEFAULT_TIMER = 75;
+	
+	public final static int TIME_BEFORE_NOTIFICATION = 10;
 
 }

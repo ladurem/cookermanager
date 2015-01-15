@@ -27,5 +27,5 @@ structure GetSensor {
 }
 
 enumeration KitchenState {
-	OK, WARN, STOP, RUNTIMER, ERROR
+	OK, WARN1, WARN2, STOP, RUNTIMER, ERROR, ALARM1, ALARM2
 }
