@@ -129,7 +129,7 @@ public class TestCase {
 		
 		// On doit recevoir les valeurs mais rien ne se passe
 				
-		for (int i = 0 ; i < 16 ; i++)
+		for (int i = 0 ; i < 18 ; i++)
 			tm.timerTriggered("0", "1");
 		
 		

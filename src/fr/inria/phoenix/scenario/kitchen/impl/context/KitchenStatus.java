@@ -27,23 +27,9 @@ public class KitchenStatus extends AbstractKitchenStatus{
 		DiaLog.info("[COMPTEUR] = " + timer);
 		DiaLog.info("[KITCHENSTATUS] KitchenStatusValuePublishable");
 		
-		//VERIFICATION PERIODIQUE
-		
-		boolean LastMoveSensor1 = lastMoveValue.value().getSensor1().booleanValue();
-		boolean LastMoveSensor2 = lastMoveValue.value().getSensor2().booleanValue();
-		
 		String IsDoorOpen = discover.contactSensors().anyOne().getState().getState();
 		
-		
-		
-		boolean IsCookerSwitchOn  = discover.cookerStatus().booleanValue();
-		DiaLog.info("[KITCHENSTATUS] COOKERSTATUS: "+IsCookerSwitchOn);
-		
-		
-		DiaLog.info("[KITCHENSTATUS] #DEBUG: SENSOR1 >"+ LastMoveSensor1);
-		DiaLog.info("[KITCHENSTATUS] SENSOR2: >"+LastMoveSensor2);
-		DiaLog.info("[KITCHENSTATUS] DOORSTATUS: "+IsDoorOpen);
-		
+		DiaLog.info("Conditions : [" + (timer < Config.DEFAULT_TIMER && timer >= (Config.DEFAULT_TIMER - Config.TIME_BEFORE_NOTIFICATION) && !notified ) + "," + (timer >= (Config.DEFAULT_TIMER + Config.TIME_BEFORE_NOTIFICATION))+ "," + (timer >= Config.DEFAULT_TIMER)+"]");
 		if (timer < Config.DEFAULT_TIMER && timer >= (Config.DEFAULT_TIMER - Config.TIME_BEFORE_NOTIFICATION) && !notified){
 			DiaLog.info("[KITCHENSTATUS] : Notifie l'utilisateur");
 			notified = true;
@@ -71,7 +57,18 @@ public class KitchenStatus extends AbstractKitchenStatus{
 		}
 		
 
+		//VERIFICATION PERIODIQUE
 		
+		boolean LastMoveSensor1 = lastMoveValue.value().getSensor1().booleanValue();
+		boolean LastMoveSensor2 = lastMoveValue.value().getSensor2().booleanValue();
+		
+		boolean IsCookerSwitchOn  = discover.cookerStatus().booleanValue();
+		DiaLog.info("[KITCHENSTATUS] COOKERSTATUS: "+IsCookerSwitchOn);
+		
+		
+		DiaLog.info("[KITCHENSTATUS] #DEBUG: SENSOR1 >"+ LastMoveSensor1);
+		DiaLog.info("[KITCHENSTATUS] SENSOR2: >"+LastMoveSensor2);
+		DiaLog.info("[KITCHENSTATUS] DOORSTATUS: "+IsDoorOpen);
 		
 		
 	
