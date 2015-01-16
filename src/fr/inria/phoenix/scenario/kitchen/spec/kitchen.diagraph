@@ -5,11 +5,11 @@
 	<action id="Messenger/SendMessage" x="291.0" y="71.0"/>
 	<action id="Cooker/Off" x="111.0" y="71.0"/>
 	<context id="KitchenStatus" x="291.0" y="311.0"/>
-	<context id="CookerStatus" x="201.0" y="431.0"/>
-	<source id="ElectricMeter/currentElectricConsumption" x="381.0" y="551.0"/>
-	<source id="Cooker/status" x="201.0" y="551.0"/>
 	<context id="LastMove" x="424.0" y="435.0"/>
-	<source id="MotionDetector/motion" x="561.0" y="551.0"/>
 	<source id="Timer/timerTriggered" x="741.0" y="551.0"/>
+	<source id="MotionDetector/motion" x="561.0" y="551.0"/>
+	<context id="CookerStatus" x="201.0" y="431.0"/>
+	<source id="Cooker/status" x="201.0" y="551.0"/>
+	<source id="ElectricMeter/currentElectricConsumption" x="381.0" y="551.0"/>
 	<source id="ContactSensor/state" x="921.0" y="551.0"/>
 </DiaGraph>

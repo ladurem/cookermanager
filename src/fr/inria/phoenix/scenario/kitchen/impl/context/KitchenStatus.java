@@ -39,16 +39,15 @@ public class KitchenStatus extends AbstractKitchenStatus{
 		boolean IsCookerSwitchOn  = discover.cookerStatus().booleanValue();
 		DiaLog.info("[KITCHENSTATUS] COOKERSTATUS: "+IsCookerSwitchOn);
 		
-		//TODO A configurer en fonction des temps d'alertes
+		
 		DiaLog.info("[KITCHENSTATUS] #DEBUG: SENSOR1 >"+ LastMoveSensor1);
 		DiaLog.info("[KITCHENSTATUS] SENSOR2: >"+LastMoveSensor2);
 		DiaLog.info("[KITCHENSTATUS] DOORSTATUS: "+IsDoorOpen);
 		
-		if (timer < Config.DEFAULT_TIMER && timer >= Config.DEFAULT_TIMER - Config.TIME_BEFORE_NOTIFICATION && !notified){
-			//TODO Send message
+		if (timer < Config.DEFAULT_TIMER && timer >= (Config.DEFAULT_TIMER - Config.TIME_BEFORE_NOTIFICATION) && !notified){
 			DiaLog.info("[KITCHENSTATUS] : Notifie l'utilisateur");
 			notified = true;
-			if (Boolean.parseBoolean(IsDoorOpen)){ // fermée
+			if (Boolean.parseBoolean(IsDoorOpen)){ // Porte fermée =>Notification forte
 				return new KitchenStatusValuePublishable(KitchenState.WARN2, true);
 			}
 			else{	//Porte ouverte
@@ -56,6 +55,11 @@ public class KitchenStatus extends AbstractKitchenStatus{
 			}
 			
 		}
+		if (timer >= (Config.DEFAULT_TIMER + Config.TIME_BEFORE_NOTIFICATION)){
+			DiaLog.info("[KITCHENSTATUS] : PAS DE REPONSE, ON STOPPE !");
+			return new KitchenStatusValuePublishable(KitchenState.STOP, true);
+		}
+		
 		if (timer >= Config.DEFAULT_TIMER){
 			DiaLog.info("[KITCHENSTATUS] : Fin du timer ==> ALARME");
 			if (Boolean.parseBoolean(IsDoorOpen)){ // fermée
@@ -65,10 +69,8 @@ public class KitchenStatus extends AbstractKitchenStatus{
 				return new KitchenStatusValuePublishable(KitchenState.ALARM1, true);
 			}
 		}
-		if (timer >= Config.DEFAULT_TIMER + Config.TIME_BEFORE_NOTIFICATION){
-			DiaLog.info("[KITCHENSTATUS] : PAS DE REPONSE, ON STOPPE !");
-			return new KitchenStatusValuePublishable(KitchenState.STOP, true);
-		}
+		
+
 		
 		
 		
@@ -78,15 +80,17 @@ public class KitchenStatus extends AbstractKitchenStatus{
 			
 			// La personne est devant la cuisinière
 			if(LastMoveSensor1){
-				// Minuteur défini ?
+				
 //				if (Config.timer_user != -1){
-//					// TODO
+				/*Mise en place du minuteur de l'application
+//				 On regarde si un timer a été renseigné par l'utilisateur afin d'eviter
+//				 les faux positifs */
 //				}
 //				else{
 //					
 //				}
 				
-				// On réinitialise le timer et 
+				// On réinitialise le timer et les status de notifications
 				timer = 0;
 				notified = false;
 				
@@ -95,18 +99,15 @@ public class KitchenStatus extends AbstractKitchenStatus{
 			}
 			// Personne dans cuisine 
 			else if(LastMoveSensor2){
-				// TODO
-				// Rien ne se passe ?
+				// Rien ne se passe 
 				notified = false;
 				DiaLog.info("[KITCHENSTATUS] Dans la cuisine mais pas devant la cuisinière");
 				return new KitchenStatusValuePublishable(KitchenState.OK, true);
 			}
 			// Personne hors de la cuisine
 			else if( !LastMoveSensor1 && !LastMoveSensor2){
-				
 				outOfTheKitchen = true;
 				DiaLog.info("[KITCHENSTATUS] La personne est sortie de la cuisine, on augmente alors la valeur décrémentée");
-				DiaLog.info("[KITCHENSTATUS] Pour les tests, on considère que la cuisinière s'éteint a ce moment la (doit être changé)");
 				return new KitchenStatusValuePublishable(KitchenState.OK, true);
 			}
 		

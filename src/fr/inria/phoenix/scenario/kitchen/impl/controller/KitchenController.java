@@ -32,8 +32,6 @@ public class KitchenController extends AbstractKitchenController {
 			discover.cookers().all().off();
 			discover.timers().all().cancel("1");
 			break;
-			
-			
 			/****MESSAGES***/
 		case "ERROR":
 			DiaLog.info("[KITCHENCONTROLLER] KitchenStatus = ERROR");
@@ -49,11 +47,11 @@ public class KitchenController extends AbstractKitchenController {
 			discover.messengers().all().sendMessage(null, "Attention", "[FORT] - Votre cuisinière est allumée.", null);
 			break;
 			
-		case "ALARME1":
+		case "ALARM1":
 			DiaLog.info("[KITCHENCONTROLLER] KitchenStatus = ALARME1");
 			discover.messengers().all().sendMessage(null, "ALERTE", "Attention, votre cuisinière est allumée. Extinction de votre cuisnière.", null);
 			break;
-		case "ALARME2":
+		case "ALARM2":
 			DiaLog.info("[KITCHENCONTROLLER] KitchenStatus = ALARME2");
 			discover.messengers().all().sendMessage(null, "ALERTE", "[FORT] Attention, votre cuisinière est allumée. Extinction de votre cuisnière.", null);
 			break;

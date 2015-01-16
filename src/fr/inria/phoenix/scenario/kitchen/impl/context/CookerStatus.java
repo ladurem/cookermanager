@@ -19,13 +19,14 @@ public class CookerStatus extends AbstractCookerStatus {
 		DiaLog.info("[COOKERSTATUS] onStateFromCooker");
 		String CookerState = statusFromCooker.value().getState();
 
-		Float ElectricConsumption = Float.parseFloat(discover.electricMeters().anyOne().getCurrentElectricConsumption().getState());
+		Float ElectricConsumption = Float.parseFloat(discover.electricMeters()
+				.anyOne().getCurrentElectricConsumption().getState());
 
 		DiaLog.info("[COOKERSTATUS] CS : " + CookerState);
 		DiaLog.info("[COOKERSTATUS] EC : " + ElectricConsumption);
 
 		if (CookerState.equals("On") && ElectricConsumption != 0) {
-			DiaLog.info("[COOKERSTATUS] système allumé");
+			DiaLog.info("[COOKERSTATUS] Système Allumé");
 			return new CookerStatusValuePublishable(true, true);
 		} else if (CookerState.equals("On") && ElectricConsumption == 0) {
 			DiaLog.info("[COOKERSTATUS] Smartswich allume mais rien branche");
